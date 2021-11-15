@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Main">
+ 	<insert id="addPictures" parameterType="com.flenda.www.dto.PicturesDto">
+		INSERT INTO PICTURES(PICSEQ, SELLSEQ, NEWFILENAME, REGIDATE)
+		VALUES(PICTURES_SEQ.NEXTVAL, #{ sellSeq }, #{ newFileName }, SYSDATE)		 	
+ 	</insert>
+ 	<insert id="updatePictures" parameterType="com.flenda.www.dto.PicturesDto">
+		INSERT INTO PICTURES(PICSEQ, SELLSEQ, NEWFILENAME, REGIDATE)
+		VALUES(PICTURES_SEQ.NEXTVAL, #{ sellSeq }, #{ newFileName }, SYSDATE)		 	
+ 	</insert>
+ 	<delete id="deletePic" parameterType="Integer">
+ 		DELETE FROM PICTURES
+ 		WHERE SELLSEQ=#{ seq } 
+ 	</delete>
+ 	<select id="countPics" parameterType="Integer" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+ 		FROM PICTURES
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<select id="getPictures" resultType="com.flenda.www.dto.PicturesDto">
+ 		SELECT *
+ 		FROM PICTURES
+ 	</select>
+ 	<select id="getPic" parameterType="Integer" resultType="com.flenda.www.dto.PicturesDto">
+ 		SELECT *
+ 		FROM PICTURES
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	
+ 	<!-- 방문자 통계 -->
+ 	<insert id="addIp" parameterType="com.flenda.www.dto.VisitDto">
+ 		INSERT INTO VISIT(USERIP,VISITTIME,STATUS)
+ 		VALUES(#{userIp},SYSDATE,#{status})
+ 	</insert>
+ 	
+ 	<!-- 아이피 주소와 접속 시간이 같을 경우 1 없으면 0 -->
+ 	<select id="getCount" parameterType="com.flenda.www.dto.VisitDto" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+ 		FROM VISIT
+ 		WHERE USERIP = #{userIp} AND TO_CHAR(VISITTIME,'YYYYMMDD') = #{visitTime}
+ 	</select>
+ 	
+ 	<!-- 아이피 삭제 -->
+ 	<delete id="delIp" parameterType="com.flenda.www.dto.VisitDto">
+ 		DELETE FROM VISIT
+ 		WHERE USERIP = #{userIp}
+ 	</delete>
+ 	
+ 	<!-- 비회원에서 방문 후 로그인 시 status mem으로 변경 -->
+ 	<update id="updateIp" parameterType="com.flenda.www.dto.VisitDto">
+ 		UPDATE VISIT 
+ 		SET STATUS = #{status}
+ 		WHERE USERIP = #{userIp}
+ 	</update>
+ 	
+ 	<!-- 관리자페이지 HOME 통계 -->
+ 	<!-- 오늘 방문자 수 -->
+ 	<select id="todayVisitCount" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM VISIT
+		WHERE TO_CHAR(VISITTIME,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+ 	</select>
+ 	
+ 	<!-- 오늘 가입자 수 -->
+ 	<select id="todayRegiCount" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM MEMBER
+		WHERE TO_CHAR(JOINDATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+ 	</select>
+ 	
+ 	<!-- 오늘 작성된 글 수 -->
+ 	<select id="todayWriteCount" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+ 		FROM BBS
+ 		WHERE TO_CHAR(WDATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+ 	</select>
+ 	
+ 	<!-- 오늘 판매액 -->
+ 	<select id="todaySales" resultType="Integer">
+ 		SELECT NVL(SUM(PAIDMONEY),0)
+		FROM ORDERS
+		WHERE TO_CHAR(ORDERDATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+ 	</select>
+ 	
+ 	<!-- 남성 수 카운트 -->
+ 	<select id="getMemberMale" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM MEMBER
+		WHERE GENDER='male'
+	</select>
+	
+	<!-- 여성 수 카운트 -->
+ 	<select id="getMemberFemale" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM MEMBER
+		WHERE GENDER='female'
+	</select>
+	
+	<!-- ********************home 통계******************** -->
+	
+	<!-- 2021년도 매출 확인 -->
+	<select id="getYearSales" resultType="com.flenda.www.dto.OrdersDto">
+		SELECT TO_CHAR(ORDERDATE, 'YYYYMM') AS MONEYDATE, TO_CHAR(SUM(PAIDMONEY)) AS MONEY
+		FROM ORDERS
+		GROUP BY TO_CHAR(ORDERDATE, 'YYYYMM')
+		HAVING TO_CHAR(ORDERDATE, 'YYYYMM') BETWEEN '202101' AND '202112'
+		ORDER BY TO_CHAR(ORDERDATE, 'YYYYMM')
+	</select>
+	
+	<!-- ********************매출 통계******************** -->
+	
+	<!-- 기간별 매출액 산출 -->
+	<select id="getSelectSales" resultType="com.flenda.www.dto.OrdersDto" parameterType="com.flenda.www.dto.Odr_SearchDto">
+		SELECT TO_CHAR(ORDERDATE, 'YYYYMMDD') AS MONEYDATE, SUM(PAIDMONEY) AS MONEY
+		FROM ORDERS
+		GROUP BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(ORDERDATE, 'YYYYMMDD') BETWEEN #{sdate} AND #{edate}
+		ORDER BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 기준 일주일전까지 매출액 산출 -->
+	<select id="getWeekSales" resultType="com.flenda.www.dto.OrdersDto">
+		SELECT TO_CHAR(ORDERDATE, 'YYYYMMDD') AS MONEYDATE, SUM(PAIDMONEY) AS MONEY
+		FROM ORDERS
+		GROUP BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(ORDERDATE, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - 6, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 기준 한달전까지 매출액 산출 -->
+	<select id="getMonthSales" resultType="com.flenda.www.dto.OrdersDto">
+		SELECT TO_CHAR(ORDERDATE, 'YYYYMMDD') AS MONEYDATE, SUM(PAIDMONEY) AS MONEY
+		FROM ORDERS
+		GROUP BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(ORDERDATE, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - INTERVAL '1' MONTH, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 기준 일년전까지 매출액 산출 -->
+	<select id="getYearSalesStatisic" resultType="com.flenda.www.dto.OrdersDto">
+		SELECT TO_CHAR(ORDERDATE, 'YYYYMMDD') AS MONEYDATE, SUM(PAIDMONEY) AS MONEY
+		FROM ORDERS
+		GROUP BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(ORDERDATE, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - INTERVAL '1' YEAR, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(ORDERDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- ********************방문자 통계******************** -->
+	
+	<!-- 기간별 방문자수 산출 -->	
+	<select id="getSelectVisit" resultType="com.flenda.www.dto.OrdersDto" parameterType="com.flenda.www.dto.Odr_SearchDto">
+		SELECT TO_CHAR(VISITTIME, 'YYYYMMDD') AS MONEYDATE, COUNT(USERIP) AS MONEY
+		FROM VISIT
+		WHERE STATUS = #{status}		
+		GROUP BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+		HAVING TO_CHAR(VISITTIME, 'YYYYMMDD') BETWEEN #{sdate} AND #{edate}
+		ORDER BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 기준 일주일 매출액 산출 -->
+	<select id="getWeekVisit" resultType="com.flenda.www.dto.OrdersDto" parameterType="String">
+		SELECT TO_CHAR(VISITTIME, 'YYYYMMDD') AS MONEYDATE, COUNT(USERIP) AS MONEY
+		FROM VISIT
+		WHERE STATUS = #{data}
+		GROUP BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+		HAVING TO_CHAR(VISITTIME, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - 6, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 기준 한달 전 매출액 산출 -->
+	<select id="getMonthVisit" resultType="com.flenda.www.dto.OrdersDto" parameterType="String">
+		SELECT TO_CHAR(VISITTIME, 'YYYYMMDD') AS MONEYDATE, COUNT(USERIP) AS MONEY
+		FROM VISIT
+		WHERE STATUS = #{data}
+		GROUP BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+		HAVING TO_CHAR(VISITTIME, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - INTERVAL '1' MONTH, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘 기준 일년 전 매출액 산출 -->
+	<select id="getYearVisit" resultType="com.flenda.www.dto.OrdersDto" parameterType="String">
+		SELECT TO_CHAR(VISITTIME, 'YYYYMMDD') AS MONEYDATE, COUNT(USERIP) AS MONEY
+		FROM VISIT
+		WHERE STATUS = #{data}
+		GROUP BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+		HAVING TO_CHAR(VISITTIME, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - INTERVAL '1' YEAR, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(VISITTIME, 'YYYYMMDD')
+	</select>
+	
+	<!-- ********************신규 가입자 통계******************** -->	
+	
+	<!-- 기간별 가입자 수 산출 -->
+	<select id="getSelectRegi" resultType="com.flenda.www.dto.OrdersDto" parameterType="com.flenda.www.dto.Odr_SearchDto">
+		SELECT TO_CHAR(JOINDATE, 'YYYYMMDD') AS MONEYDATE, COUNT(ID) AS MONEY
+		FROM MEMBER
+		WHERE GENDER = #{status}		
+		GROUP BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(JOINDATE, 'YYYYMMDD') BETWEEN #{sdate} AND #{edate}
+		ORDER BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘부터 일주일 가입자 수 산출 -->
+	<select id="getWeekRegi" resultType="com.flenda.www.dto.OrdersDto" parameterType="String">
+		SELECT TO_CHAR(JOINDATE, 'YYYYMMDD') AS MONEYDATE, COUNT(ID) AS MONEY
+		FROM MEMBER
+		WHERE GENDER = #{data}
+		GROUP BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(JOINDATE, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - 6, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘부터 한달 가입자 수 산출 -->
+	<select id="getMonthRegi" resultType="com.flenda.www.dto.OrdersDto" parameterType="String">
+		SELECT TO_CHAR(JOINDATE, 'YYYYMMDD') AS MONEYDATE, COUNT(ID) AS MONEY
+		FROM MEMBER
+		WHERE GENDER = #{data}
+		GROUP BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(JOINDATE, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - INTERVAL '1' MONTH, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+	</select>
+	
+	<!-- 오늘부터 일년 가입자 수 산출 -->
+	<select id="getYearRegi" resultType="com.flenda.www.dto.OrdersDto" parameterType="String">
+		SELECT TO_CHAR(JOINDATE, 'YYYYMMDD') AS MONEYDATE, COUNT(ID) AS MONEY
+		FROM MEMBER
+		WHERE GENDER = #{data}
+		GROUP BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+		HAVING TO_CHAR(JOINDATE, 'YYYYMMDD') BETWEEN TO_CHAR(SYSDATE - INTERVAL '1' YEAR, 'YYYYMMDD') AND TO_CHAR(SYSDATE,'YYYYMMDD')
+		ORDER BY TO_CHAR(JOINDATE, 'YYYYMMDD')
+	</select>
+ </mapper>

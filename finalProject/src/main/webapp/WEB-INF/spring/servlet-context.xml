@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- View 설정중 -->
+	
+	
+	<!-- spring MVC annotation(주석문, 지시문)을 사용허가 설정-->
+	<context:annotation-config />
+	
+	<!-- 사용자의 view의 위치, 확장자명 설정과정 -->
+	<!--MyClass cls = new MyClass();와 같이 객체를 사용할 때 생성하는 것 : 이유-설정으 위한 java코드를 xml에서 xml를 부르는 것이 편함 -->
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>	view의 경로(jsp파일이 들어간 것이 무엇인지 알려줌)
+		<property name="suffix" value=".jsp"></property>	확장자를 잡아줄 때 쓰임
+	</bean> -->
+	
+	<!-- tiles 등록 -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/views/layouts.xml</value> <!-- jsp를 모아주는 파일 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- tiles 설정 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">	
+		<property name="requestContextAttribute" value="requestContext" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+	</bean>
+	
+	<!-- 공통패키지를 설정  -->
+	<context:component-scan base-package="com.flenda.www" />
+	
+	<!-- Ajax 주석문을 사용허가 (== Axios)-->
+	<mvc:annotation-driven />
+	
+	<!-- spring에서 처리할 수 없는 request(요청)은 tomcat에 위임 -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- 이메일 보내기 -->	
+	<bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="flenda222@gmail.com" />
+		<property name="password" value="vmffpsek222" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+      			<prop key="mail.smtp.starttls.enable">true</prop>
+      			<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.debug">true</prop>
+      			<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

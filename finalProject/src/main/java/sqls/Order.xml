@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Order">
+ 	<insert id="addOrder" parameterType="com.flenda.www.dto.OrdersDto">
+ 		INSERT INTO ORDERS(ORDERSEQ, ORDERNUM, ID, NAME, EMAIL, PHONE, BANKNAME, CARDNAME, CARDNUM, ITEMNAME, 
+ 							PAYMETHOD, PAIDMONEY, TOTALCOUNT, RESERVATIONDATE, USERMEMO, ORDERDATE, MEETPLACE, CATEGORY, SELLSEQ, USEDATE)
+ 		VALUES(ORDER_SEQ.NEXTVAL, #{ orderNum } , #{ id }, #{ name }, #{ email }, #{ phone }, #{ bankName }, #{ cardName }, #{ cardNum }, #{ ItemName }, #{ payMethod }, #{ paidMoney }, #{ totalCount }, #{ reservationDate }, #{ userMemo }, SYSDATE, #{ meetplace }, #{ category }, #{ sellSeq }, #{ useDate })
+ 	</insert>
+ 	
+ 	<select id="getList" resultType="com.flenda.www.dto.OrdersDto" parameterType="com.flenda.www.dto.Odr_SearchDto">
+ 		SELECT ORDERSEQ, ORDERNUM, ID, NAME, EMAIL, PHONE, BANKNAME, CARDNAME, CARDNUM, ITEMNAME, 
+ 				PAYMETHOD, PAIDMONEY, TOTALCOUNT, RESERVATIONDATE, USERMEMO, ORDERDATE, MEETPLACE, CATEGORY, SELLSEQ, USEDATE
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY ORDERDATE DESC) AS RNUM,
+ 				ORDERSEQ, ORDERNUM, ID, NAME, EMAIL, PHONE, BANKNAME, CARDNAME, CARDNUM, ITEMNAME, 
+ 				PAYMETHOD, PAIDMONEY, TOTALCOUNT, RESERVATIONDATE, USERMEMO, ORDERDATE, MEETPLACE, CATEGORY, SELLSEQ, USEDATE
+ 			  FROM ORDERS
+ 			  WHERE 1=1 
+ 			  <if test="choice == 'name'"><!-- 검색입력창 -->
+ 			  	AND NAME LIKE '%'||#{ search }||'%'
+ 			  </if>
+ 			  <if test="choice == 'ordernum'"><!-- 검색입력창 -->
+ 			  	AND ORDERNUM LIKE '%'||#{ search }||'%'
+ 			  </if>
+ 			   	<if test="choice == 'orderMethod'"><!-- 검색입력창 -->
+ 			  	AND PAYMETHOD LIKE '%'||#{ search }||'%'
+ 			  </if> 			  
+ 			  <if test="sdate != 'all' and edate != 'all'"><!-- 일정검색 -->
+				AND TO_CHAR(ORDERDATE,'YYYYMMDD') BETWEEN #{ sdate } AND #{ edate }
+			  </if>
+ 			  ORDER BY ORDERDATE DESC)
+ 		WHERE RNUM BETWEEN 1 + (10*#{ pageNum }) AND 10 + (10*#{ pageNum })
+ 	</select>
+ 	
+ 	<select id="getOrderPageCount" parameterType="com.flenda.www.dto.Odr_SearchDto" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+		FROM ORDERS
+		WHERE 1=1
+		<if test="choice == 'name'">
+			AND NAME LIKE '%'||#{ search }||'%'
+		</if>
+		<if test="choice == 'ordernum'">
+			AND ORDERNUM LIKE '%'||#{ search }||'%'
+		</if>
+ 		<if test="choice == 'orderMethod'"><!-- 검색입력창 -->
+ 		  	AND PAYMETHOD LIKE '%'||#{ search }||'%'
+ 		</if> 
+		<if test="sdate != 'all' and edate != 'all'"><!-- 일정검색 -->
+			AND TO_CHAR(ORDERDATE,'YYYYMMDD') BETWEEN #{ sdate } AND #{ edate }
+		</if>
+ 	</select>
+ 	
+ 	
+ 	<select id="getOrder" resultType="com.flenda.www.dto.OrdersDto" parameterType="java.lang.String">
+ 		SELECT *
+ 		FROM ORDERS
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</select>
+ 	
+ 	<insert id="addRefund" parameterType="com.flenda.www.dto.OrdersDto">
+ 		INSERT INTO REFUND(REFUNDSEQ,ORDERNUM,ITEMNAME,CONDITION,REFUNDPRICE,REQDATE,FINISHDATE,REFUNDREASON,PAYMETHOD,CARDNUM,BALANCE,REFUNDPAY,NAME,EMAIL)
+ 		VALUES(RFN_SEQ.NEXTVAL, #{orderNum}, #{ItemName},'환불처리중', #{paidMoney}, SYSDATE, SYSDATE, '-', #{payMethod}, #{cardNum}, '-', '-', #{name}, #{email})
+ 	</insert>
+ 	
+ 	<select id="refundList" parameterType="com.flenda.www.dto.Odr_SearchDto" resultType="com.flenda.www.dto.RefundDto">
+ 		SELECT REFUNDSEQ,ORDERNUM,ITEMNAME,CONDITION,REFUNDPRICE,REQDATE,FINISHDATE,REFUNDREASON,PAYMETHOD,
+ 			CARDNUM,BALANCE,REFUNDPAY,NAME,EMAIL
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REQDATE DESC) AS RNUM,
+ 				REFUNDSEQ,ORDERNUM,ITEMNAME,CONDITION,REFUNDPRICE,
+ 				REQDATE,FINISHDATE,REFUNDREASON,PAYMETHOD,CARDNUM,BALANCE,REFUNDPAY,NAME,EMAIL
+ 			  FROM REFUND
+ 			  WHERE 1=1
+ 			  <if test="status == 'refundting'">
+ 				AND CONDITION = '환불처리중'
+ 			  </if>
+ 			  <if test="status == 'completerefund'">
+ 				AND CONDITION = '환불완료'
+ 			  </if>
+ 			  <if test="status == 'calcelrefund'">
+ 				AND CONDITION = '환불취소'
+ 			  </if>
+ 			  <if test="choice == 'itemName'"><!-- 검색입력창 -->
+ 			  	AND ITEMNAME LIKE '%'||#{ search }||'%'
+ 			  </if>
+ 			  <if test="choice == 'orderNum'"><!-- 검색입력창 -->
+ 			  	AND ORDERNUM LIKE '%'||#{ search }||'%'
+ 			  </if>			  
+ 			  <if test="sdate != 'all' and edate != 'all'"><!-- 일정검색 -->
+				AND TO_CHAR(REQDATE,'YYYYMMDD') BETWEEN #{ sdate } AND #{ edate }
+			  </if>
+ 			  ORDER BY REQDATE DESC)
+ 		WHERE RNUM BETWEEN 1 + (10*#{ pageNum }) AND 10 + (10*#{ pageNum })
+ 	</select>
+ 	
+ 	<select id="getRefundPageCount" parameterType="com.flenda.www.dto.Odr_SearchDto" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+		FROM REFUND
+		WHERE 1=1
+			<if test="status == 'refundting'">
+ 				AND CONDITION = '환불처리중'
+ 			</if>
+ 			<if test="status == 'completerefund'">
+ 				AND CONDITION = '환불완료'
+ 			</if>
+ 			<if test="status == 'calcelrefund'">
+ 				AND CONDITION = '환불취소'
+ 			</if>
+ 			<if test="choice == 'itemName'"><!-- 검색입력창 -->
+ 			  	AND ITEMNAME LIKE '%'||#{ search }||'%'
+ 			</if>
+ 			<if test="choice == 'orderNum'"><!-- 검색입력창 -->
+ 			  	AND ORDERNUM LIKE '%'||#{ search }||'%'
+ 			</if>			  
+ 			<if test="sdate != 'all' and edate != 'all'"><!-- 일정검색 -->
+				AND TO_CHAR(REQDATE,'YYYYMMDD') BETWEEN #{ sdate } AND #{ edate }
+			</if>
+ 	</select>
+ 	
+   	<update id="conUpdate" parameterType="com.flenda.www.dto.RefundDto">
+ 		UPDATE REFUND SET CONDITION=#{condition}
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</update>
+ 	
+ 	<select id="getRefund" parameterType="com.flenda.www.dto.RefundDto" resultType="com.flenda.www.dto.RefundDto">
+ 		SELECT REFUNDSEQ,ORDERNUM,ITEMNAME,CONDITION,REFUNDPRICE,REQDATE,FINISHDATE,REFUNDREASON,PAYMETHOD,CARDNUM,BALANCE,REFUNDPAY,NAME,EMAIL
+ 		FROM REFUND
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</select>
+ 	
+ 	<update id="updateBal" parameterType="com.flenda.www.dto.RefundDto">
+ 		UPDATE REFUND 
+ 		SET BALANCE = #{balance}
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</update>
+ 	 <update id="updatePay" parameterType="com.flenda.www.dto.RefundDto">
+ 		UPDATE REFUND 
+ 		SET REFUNDPAY = #{refundPay}
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</update>
+ 	
+   	<update id="updateRsn" parameterType="com.flenda.www.dto.RefundDto">
+ 		UPDATE REFUND 
+ 		SET REFUNDREASON = #{refundReason}, FINISHDATE = SYSDATE
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</update>
+ 	
+ 	<delete id="delRefund" parameterType="com.flenda.www.dto.RefundDto">
+ 		DELETE FROM REFUND
+		WHERE ORDERNUM = #{orderNum}
+ 	</delete>
+ 	
+ 	 <delete id="delOrder" parameterType="com.flenda.www.dto.OrdersDto">
+ 		DELETE FROM ORDERS
+		WHERE ORDERNUM = #{orderNum}
+ 	</delete>
+ 	
+ 	<update id="updateFinishdate" parameterType="com.flenda.www.dto.RefundDto">
+ 		UPDATE REFUND 
+ 		SET FINISHDATE = SYSDATE
+ 		WHERE ORDERNUM = #{orderNum}
+ 	</update>
+ 	
+ </mapper>

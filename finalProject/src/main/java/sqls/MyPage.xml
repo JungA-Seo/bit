@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="MyPage">
+
+	<!-- 마이페이지 -> 내가 쓴 글 전체 목록 -->
+   <select id="getMypageBbsList" parameterType="com.flenda.www.dto.BbsParam" resultType="com.flenda.www.dto.BbsDto">
+      SELECT SEQ, ID, CATEGORY, TITLE, CONTENT, NEWFILENAME, ADDRESS, AREA, WDATE,
+				READCOUNT, LIKECOUNT, COMMENTCOUNT
+		FROM	   
+			(SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+					SEQ, ID, CATEGORY, TITLE, CONTENT, NEWFILENAME, ADDRESS, AREA, WDATE,
+					READCOUNT, LIKECOUNT, COMMENTCOUNT
+			FROM BBS
+			WHERE ID=#{search}
+			ORDER BY WDATE DESC)
+		WHERE RNUM BETWEEN 1 + (8*#{pageNumber}) AND 8 + (8*#{pageNumber})
+   </select>
+	<!-- 글의 총 수 -->
+	<select id="getMypageBbsCount" parameterType="com.flenda.www.dto.BbsParam" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM BBS
+		WHERE ID=#{search}
+	</select>
+	
+	<!-- 마이페이지->예약내역->후기작성 -->
+ 	<insert id="addReview" parameterType="com.flenda.www.dto.ReviewDto">
+		INSERT INTO REVIEW(REVIEWSEQ, SELLSEQ, ID, USERIMG, CONTENT, FILENAME, REGIDATE, RESCORE)
+		VALUES(REV_SEQ.NEXTVAL, #{ sellSeq }, #{ id }, #{ userImg }, #{ content } ,#{ fileName }, SYSDATE, #{ rescore })		 	
+ 	</insert>
+ 	<select id="checkReview" parameterType="com.flenda.www.dto.ReviewDto" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+ 		FROM REVIEW
+ 		WHERE SELLSEQ=#{sellSeq} AND ID=#{id}
+ 	</select>
+ 	<select id="getReivews" parameterType="Integer" resultType="com.flenda.www.dto.ReviewDto">
+ 		SELECT *
+ 		FROM REVIEW
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<select id="countReviews" parameterType="Integer" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+		FROM REVIEW
+		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<select id="avgReviews" parameterType="Integer" resultType="String">
+ 		SELECT NVL((ROUND(AVG(RESCORE),1)),0)
+		FROM REVIEW
+		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<!-- 마이페이지 구매내역 글 총 갯수 -->
+ 	<select id="orderlistCount" parameterType="String" resultType="Integer">
+ 		SELECT NVL(COUNT(*),0)
+		FROM ORDERS
+		WHERE ID=#{ id }
+ 	</select>
+ 	<select id="getreviewlist" parameterType="String" resultType="com.flenda.www.dto.OrdersDto">
+ 		SELECT ORDERSEQ, ORDERNUM, ID, NAME, EMAIL, PHONE, BANKNAME, CARDNAME, CARDNUM, ITEMNAME,
+ 				 PAYMETHOD, PAIDMONEY, TOTALCOUNT, RESERVATIONDATE, USERMEMO, ORDERDATE, MEETPLACE, CATEGORY, SELLSEQ
+ 		FROM ORDERS
+ 		WHERE ID=#{ id }
+ 	</select>
+ 	
+ 	
+ 	<!--위시리스트-->
+ 	<insert id="addWish" parameterType="com.flenda.www.dto.WishDto">
+ 		INSERT INTO WISH(WISHSEQ, ID, SELLSEQ, WDATE)
+ 		VALUES(WISH_SEQ.NEXTVAL, #{ id }, #{ sellseq }, SYSDATE)
+ 	</insert>
+ 	<delete id="deleteWish" parameterType="com.flenda.www.dto.WishDto">
+ 		DELETE FROM WISH
+ 		WHERE ID=#{ id } AND SELLSEQ=#{ sellseq }
+ 	</delete>
+ 	<select id="getWishList" resultType="com.flenda.www.dto.WishDto">
+ 		SELECT *
+ 		FROM WISH
+ 	</select>
+ 	<select id="mypageWishList" parameterType="String" resultType="com.flenda.www.dto.ActivityDto">
+ 		SELECT *
+ 		FROM ACTIVITY
+ 		WHERE SELLSEQ IN (SELECT SELLSEQ
+						  FROM WISH
+						  WHERE ID=#{ id })
+ 	</select>
+ 	<select id="mypageThemeWishList" parameterType="String" resultType="com.flenda.www.dto.ThemeDto">
+ 		SELECT *
+ 		FROM THEME
+ 		WHERE SELLSEQ IN (SELECT SELLSEQ
+						  FROM WISH
+						  WHERE ID=#{ id })
+ 	</select>
+</mapper>

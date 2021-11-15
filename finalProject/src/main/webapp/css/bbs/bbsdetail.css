@@ -1,0 +1,478 @@
+@charset "UTF-8";
+
+/* 게시글 상세보기(detail) */
+
+/* 전체 */
+.bbsdetail{
+	margin: auto;
+	width: 1200px;
+	height: 100%;
+/*	border: 3px solid red;*/
+	padding: 50px;
+}
+
+/* 이전 / 수정 / 삭제 버튼 */
+.btn-list{
+	height: 40px;
+/*	border: 3px solid black;*/
+}
+
+/* Header */
+/* Header 전체 감싸는 부분 */
+.detailHeader{
+	width: 100%;
+	height: 80px;
+/*	border: 3px solid green;*/
+}
+.title_bar{
+	width: 100%;
+	height: 70px;
+/*	border: 3px solid silver;*/
+}
+/* 작성자 프로필 이미지 */
+.author_img{
+	width: 70px;
+	height: 70px;
+/*	border: 3px solid aqua;*/
+	float: left;
+}
+.author_img img{
+	border-radius: 70%; /* 원형 */
+	object-fit: cover;
+	overflow: hidden;
+	width: 70px;
+	height: 70px;
+/*	border: 3px solid black;*/
+}
+/* 작성자ID 및 작성일 */
+.author_info{
+	width: 300px;
+	height: 80px;
+/*	border: 3px solid indigo;*/
+	float: left;
+	margin-left: 5px;
+}
+.user-id{
+	width: 290px;
+	height: 30px;
+	text-align: left;
+	margin-top: 5px;
+	padding-left: 10px;
+/*	border: 3px solid hotpink;*/
+}
+.time{
+	width: 290px;
+	height: 30px;
+	text-align: left;
+	padding-left: 10px;
+/*	border: 3px solid aquamarine;*/
+}
+#id{
+	font-size: 22px;
+	font-weight: bold;
+}
+#wdate{
+	font-size: 14px;
+	color: gray;
+}
+
+
+/* 조회수 및 위치 (사용자가 입력한 값) */
+.etc_info{
+	width: 500px;
+	height: 80px;
+/*	border: 3px solid gold;*/
+	float: right;
+	margin-top: 10px;
+}
+/* 조회수 */
+.read-count{
+	width: 500px;
+	height: 30px;
+/*	border: 3px solid hotpink;*/
+	float: right;
+}
+.rcount{
+	height: 30px;
+/*	border: 3px solid yellow;*/
+	float: right;
+	margin-left: 3px;
+}
+.rImg{
+	width: 30px;
+	height: 30px;
+/*	border: 3px solid blue;*/
+	float: right;
+}
+.rImg img{
+	width: 25px;
+	height: 25px;
+}
+/* 위치 */
+.address{
+	width: 500px;
+	height: 30px;
+/*	border: 3px solid aquamarine;*/
+	float: right;
+}
+.ar{
+	height: 30px;
+/*	border: 3px solid yellow;*/
+	float: right;
+	margin-left: 3px;
+}
+.aImg{
+	width: 30px;
+	height: 30px;
+/*	border: 3px solid blue;*/
+	float: right;
+}
+.aImg img{
+	width: 25px;
+	height: 25px;
+}
+#rcount{
+	color: gray;
+	font-size: 16px;
+}
+#address{
+	color: gray;
+	font-size: 16px;
+}
+
+
+
+/* Body */
+/* Body 전체 감싸는 부분 */
+.detailBody{
+	width: 100%;
+	/*
+	summernote 내용 들어와야 해서 아마 동적으로 사이즈 줘야할 듯
+	-> height값 안주면됨
+	*/
+/*	height: 800px;	*/
+/*	border: 3px solid blue;*/
+	clear: both;
+}
+/* 카테고리명 & 제목 */
+.community-title{
+	width: 100%;
+	height: 50px;
+/*	border: 3px solid lightcoral;*/
+}
+.name{
+	width: 100%;
+	height: 40px;
+/*	border: 3px solid khaki;*/
+	float: left;
+	text-align: left;
+	margin-bottom: 30px;
+}
+#category{
+	font-size: 22px;
+	font-weight: bold;
+	color: #0d6efd;
+	margin-right: 3px;
+}
+#title{
+	font-size: 24px;
+	font-weight: bold;
+	text-align: left;
+}
+
+
+/* 본문 */
+.community-content{
+	width: 1000px;
+/*	border: 3px solid palegreen;*/
+	margin: auto;
+	margin-top: 3px;
+	clear: both;
+	font-size: 20px;
+	text-align: left;
+}
+
+/* 예산 */
+/*
+.budget-list{
+	width: 100%;
+	border: 3px solid pink;
+}
+*/
+
+/* 좋아요 수 & 댓글 수 */
+.counting{
+	width: 100%;
+	height: 50px;
+/*	border: 3px solid teal;*/
+}
+.like-count{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 130px;
+	height: 40px;
+/*	border: 3px solid olive;*/
+	float: left;
+}
+.like-img{
+	width: 30px;
+	height: 30px;
+/*	border: 3px solid deeppink;*/
+	float: left;
+}
+
+.btn_like_img{
+	/* 버튼 테두리 없애기 */
+	border: 0;
+	outline: 0;
+}
+
+.like-img img{	/* 하트 */
+	display: full;
+	width: 18px;
+	height: 18px;
+}
+
+.likeC{
+	width: 90px;
+	height: 30px;
+/*	border: 3px solid black;*/
+	float: left;
+	text-align: left;
+}
+#likeCount{
+	font-size: 14px;
+	color: gray;
+}
+.comment-count{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 130px;
+	height: 40px;
+/*	border: 3px solid orchid;*/
+	float: left;
+}
+.comment-img{
+	width: 30px;
+	height: 30px;
+/*	border: 3px solid orange;*/
+	float: left;
+}
+.comment-img img{ /* 말풍선 */
+	width: 23px;
+	height: 23px;
+}
+.commentC{
+	width: 90px;
+	height: 30px;
+/*	border: 3px solid black;*/
+	float: left;
+	text-align: left;
+}
+#replyCount{
+	font-size: 14px;
+	color: gray;
+}
+
+
+/* Comment (댓글) */
+.replyWrite{
+	clear: both;
+	width: 100%;
+	height: 90px;
+/*	border: 3px solid yellow;*/
+}
+.login_img{
+	width: 75px;
+	height: 75px;
+/*	border: 3px solid aqua;*/
+	float: left;
+}
+.login_img img{
+	border-radius: 70%; /* 원형 */
+	object-fit: cover;
+	overflow: hidden;
+	width: 70px;
+	height: 70px;
+/*	border: 3px solid black;*/
+	clear: both;
+}
+/* 댓글 작성 */
+.reply{
+	width: 93%;
+	height: 80px;
+/*	border: 3px solid purple;*/
+	float: left;
+}
+.rwrite{
+	width: 90%;
+	height: 70px;
+/*	border: 3px solid darkorange;*/
+	float: left;
+	padding-top: 3px;
+	padding-left: 10px;
+}
+.rwritebtn{
+	width: 10%;
+	height: 70px;
+/*	border: 3px solid darkgray;*/
+	float: left;
+	padding-top: 3px;
+}
+#replyWriteBtn{
+	width: 80px;
+	height: 60px;
+}
+
+
+/* 댓글 목록 */
+.replyList{
+	clear: both;
+	width: 100%;
+	/* list size에 따른 동적 높이 조절이므로 height 뺌 */
+/*	height: 80px;*/
+/*	border: 3px solid mediumpurple;*/
+}
+.replyOne{
+	width: 100%;
+	height: 100px;
+/*	border: 3px solid greenyellow;*/
+}
+.rwriter_img{
+	width: 70px;
+	height: 70px;
+/*	border: 3px solid aqua;*/
+	float: left;
+}
+.rwriter_img img{
+	border-radius: 70%; /* 원형 */
+	object-fit: cover;
+	overflow: hidden;
+	width: 70px;
+	height: 70px;
+/*	border: 3px solid black;*/
+	clear: both;
+}
+.rwriter_info{
+	width: 93%;
+	height: 40px;
+/*	border: 3px solid blue;*/
+	padding-left: 10px;
+	float: left;
+}
+.rwriter-id{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	height: 30px;
+/*	border: 3px solid yellow;*/
+	float: left;
+	text-align: left;
+	font-size: 20px;
+	margin-left: 5px;
+}
+.rwdate{
+	display: flex;
+    justify-content: left;
+    align-items: center;
+	width: 300px;
+	height: 30px;
+/*	border: 3px solid pink;*/
+	float: left;
+	text-align: left;
+	font-size: 10px;
+	color: gray;
+	padding-top: 3px;
+	margin-left: 7px;
+}
+.rUpdate{
+	width: 100px;
+	height: 30px;
+/*	border: 3px solid orange;*/
+	float: right;
+}
+.rDelete{
+	width: 100px;
+	height: 30px;
+/*	border: 3px solid indianred;*/
+	float: right;
+	margin-left: 10px;
+}
+.btn btn-outline-secondary{
+	font-size: 5px !important;
+}
+.reply-content{
+	width: 93%;
+	/* 댓글 size에 따른 동적 사이즈므로 나중에 height 뺄 것 */
+	height: 40px;
+/*	border: 3px solid gray;*/
+	padding-left: 10px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+}
+
+
+/* 댓글 수정 버튼 클릭시 생기는 editor창 */
+.replyEdit{
+	width: 100%;
+	height: 90px;
+/*	border: 3px solid yellow;*/
+}
+.replyEdit{
+	width: 92%;
+	height: 80px;
+/*	border: 3px solid purple;*/
+	float: left;
+}
+.redit{
+	width: 90%;
+	height: 70px;
+/*	border: 3px solid darkorange;*/
+	float: left;
+	padding-left: 10px;
+}
+.reditbtn{
+	width: 10%;
+	height: 70px;
+/*	border: 3px solid darkgray;*/
+	float: left;
+}
+.editcompletebtn{
+	width: 100%;
+	height: 35px;
+/*	border: 3px solid red;*/
+	clear: both;
+}
+.editbackbtn{
+	width: 100%;
+	height: 35px;
+/*	border: 3px solid blue;*/
+}
+#replyUpdateComplete{
+	width: 80px;
+	height: 30px;
+}
+#replyUpdateBack{
+	width: 80px;
+	height: 30px;
+}
+
+/*
+// 댓글 원본 아래에 뜨는 수정창 css
+.rUpdateBack{
+	width: 100px;
+	height: 30px;
+	border: 3px solid orange;
+	float: right;
+}
+.rUpdateComplete{
+	width: 100px;
+	height: 30px;
+	border: 3px solid indianred;
+	float: right;
+	margin-left: 10px;
+}
+*/

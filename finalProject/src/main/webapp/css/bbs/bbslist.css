@@ -1,0 +1,298 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* 커뮤니티메인 */
+.bbsmain{
+	width: 100%;
+	height: 100%;
+/*	border: 3px solid green;*/
+}
+/* 새 글 작성 및 검색 */
+.new{
+	width: 100%;
+	height: 50px;
+	margin-left: 20px;
+}
+/* 새 글 작성 */
+.newnew{
+	float: right;
+	margin-right: 20px;
+}
+/* 검색 */
+.searchNow{
+	position: relative;
+	width: 500px;
+	height: 50px;
+	border-radius: 4px;
+/*	border: 3px solid blue;*/
+	float: left;
+}
+/* 검색 : select custom */
+.searchSelect{
+	width: 150px;
+/*	border: 3px solid yellow;*/
+	float: left;
+	margin-top: 2px;
+	margin-right: 10px;
+}
+select::-ms-expand { 
+	display: none;
+}
+.select {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.select {
+  width: 150px;
+  height: 35px;
+  background: url('https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png') calc(100% - 5px) center no-repeat;
+  background-size: 20px;
+  padding: 5px 30px 5px 10px;
+  border-radius: 4px;
+  outline: 0 none;
+}
+.select option {
+  background: black;
+  color: #fff;
+  padding: 3px 0;
+}
+
+/* 검색 : 텍스트 + 버튼 */
+.searchInput{
+	width: 290px;
+	border-radius: 2em;
+	border: 1px solid gray;
+	float: left;
+}
+#_search{
+	border-radius: 7px;
+}
+#btnSearch {
+	border: 0; /* 버튼 테두리 없애기 */
+	outline: 0;
+}
+.searchNow img{
+	width: 30px;
+	height: 30px;
+}
+
+/* 지역 slidecard */
+.swiper-container {
+	width:100%;
+	height:150px;
+/*	border:3px solid silver;*/
+	border-radius:7px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.swiper-slide:hover {
+	text-align:center;
+	display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+	align-items:center;	/* 위아래 기준 중앙정렬 */
+	justify-content:center;	/* 좌우 기준 중앙정렬 */
+	box-sizing:border-box; /* 이 설정을 하지 않으면 슬라이드드가 틀어짐 */
+	box-shadow: 1px 1px 20px #ddd;
+}
+.swiper-slide button{
+	border: 0; /* 버튼 테두리 없애기 */
+	outline: 0;
+}
+.swiper-slide img {
+	position: relative;	/* 이미지 위에 글자 올리려고 씀 */
+	opacity: 1;	/* 이미지 투명로 1 ~ 0 으로 갈수록 투명해짐 */
+	width: 200px;
+	height: 150px;
+	box-shadow:0 0 5px #555;
+	max-width:100%; /* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
+}
+.swiper-slide h3{
+	font-family: 'GowunDodum-Regular';
+	position: absolute;
+	top: 5px;
+	left: 30px;
+	color: white;
+/*	background-color: black;*/
+	opacity: 1;
+}
+
+/* 새 글 작성 */
+.new{
+	width: 100%;
+	height: 50px;
+/*	border: 3px solid plum;*/
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+/* 게시판 메인 목록 */
+.bbsmainlist{
+	width: 100%;
+/*	height: 2400px;
+	border: 3px solid red;*/
+	padding: 10px;
+}
+.bbsone{
+	width: 100%;
+	height: 210px;
+	border: 1px solid gray;
+	margin: 5px;
+	margin-bottom: 20px;
+}
+.community-img{
+	display: flex;
+	width: 205px;
+	height: 209px;
+/*	border: 3px solid pink;*/
+	float: left;
+}
+.community-img img{
+	display: flex;
+	width: 205px;
+	height: 208px;
+}
+.community-info-box{
+	width: 82%;
+	height: 200px;
+/*	border: 3px solid orange;*/
+	margin-left: 15px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	padding: 10px; 
+	float: left;
+}
+a {
+	color: black;
+	text-decoration-line: none;
+}
+a:hover{
+	color: black;
+	text-decoration: underline;
+}
+#category{
+	font-size: 22px;
+	font-weight: bold;
+	color: #0d6efd;
+	margin-right: 3px;
+}
+#title{
+	font-size: 24px;
+	font-weight: bold;
+	text-align: left;
+}
+#regidate{
+	font-size: 14px;
+	font-weight: bold;
+	color: gray;
+}
+#content{
+	font-size: 20px;
+	color: #636363;
+	text-align: left;
+}
+.community-title{
+	width: 80%;
+	height: 50px;
+/*	border: 3px solid purple;*/
+	float: left;
+}
+.titles{
+	width: 100%;
+	height: 50px;
+/*	border: 3px solid violet;*/
+	text-align: left;
+	float: left;
+}
+.community-wdate{
+	width: 20%;
+	height: 50px;
+	text-align: right;
+/*	border: 3px solid darkkhaki;*/
+	float:right;
+}
+.community-content{
+	width: 100%;
+	height: 100px;
+	text-align: left;
+/*	border: 3px solid aqua; */
+	clear: both; /* float 해제 */
+}
+.community-countbox{
+	width: 100%;
+	height: 25px;
+/*	border: 3px solid brown;*/
+	text-align: left;
+}
+.postText{
+	color: gray;
+}
+#ids{
+	font-weight: bold;
+}
+#adds{
+	font-weight: bold;
+}
+.like-count{
+	width: 60px;
+	height: 25px;
+/*	border: 3px solid lime;*/
+	float: right;
+}
+.comment-count{
+	width: 60px;
+	height: 25px;
+/*	border: 3px solid gold;*/
+	float: right;
+}
+.ccountImg{
+	width: 25px;
+	height: 25px;
+/*	border: 3px solid skyblue;*/
+	float:right;
+}
+.ccountImg img{
+	width: 20px;
+	height: 20px;
+}
+.ccount{
+	width: 25px;
+	height: 25px;
+/*	border: 3px solid pink;*/
+	float: right;
+}
+.lcountImg{
+	width: 25px;
+	height: 25px;
+/*	border: 3px solid skyblue;*/
+	float:right;
+}
+.lcountImg img{
+	width: 20px;
+	height: 20px;
+}
+.lcount{
+	width: 25px;
+	height: 25px;
+/*	border: 3px solid pink;*/
+	float: right;
+}
+#ccount{
+	font-size: 18px;
+	color: gray;
+}
+#lcount{
+	font-size: 18px;
+	color: gray;
+}
+.paging{
+	width: 100%;
+	height: 80px;
+/*	border: 3px solid black;*/
+	clear: both;
+}

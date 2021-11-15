@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+.review{
+	width: 100%;
+}
+
+.review_scores{
+	width: 100%;
+	height: 200px;
+}
+
+.score_left{
+	float: left;
+	width: 200px;
+	height: 180px;
+	margin: 10px;
+	padding-top: 40px;
+	
+	font-size: 30px;
+	font-weight: bold;
+	background-color: #EFF8FB;
+}
+.score_right{
+	float: left;
+	width: 470px;
+	height: 180px;
+	margin: 10px;
+	background-color: #EFF8FB;
+	padding-top: 40px;
+}
+
+.score_right .grahpScore{
+	float: left;
+	width: 50px;
+	height: 100px;
+	text-align: right;
+	font-size: 10px;
+	color: blue;
+	margin-left: 50px;
+}
+.score_right .grahpScore .grahpScores{
+	margin-bottom: 6px;
+}
+
+.score_right .grahpBar{
+	float: left;
+	width: 300px;
+	height: 100px;
+}
+
+.score_right .progress{
+	width: 300px;
+	margin-bottom: 5px;
+	margin-left: 3px;
+}
+
+.reviewBox{
+	width: 100%;
+}
+.review_profile{
+	float: left;
+	width: 10%;
+	height: 100%;
+	padding-top: 10px;
+}
+.review_profile img{
+	border-radius: 40px;
+}
+.reviewBody{
+	float: left;
+	width: 55%;
+	height: 100%;
+	text-align: left;
+	padding: 10px;
+	margin-right: 45px;
+}
+.reviewBody .reviewContent{
+	margin-top: 30px;
+}
+.reviewImg{
+	width: 200px;
+	height: 150px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	overflow: hidden;
+ 	display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: white;
+}

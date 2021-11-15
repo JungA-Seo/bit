@@ -1,0 +1,326 @@
+@charset "UTF-8";
+
+/* 0831 수정 */
+tr{
+   color: gray;
+}
+
+.centered { 
+   display: table;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 50px;
+    color: gray;
+}
+
+.findcentered { 
+   display: table;
+   color: gray;
+   width: 650px;
+   height: 600px;
+   margin-top: 200px;
+   padding : 30px;
+    
+ }
+
+.loginForm {
+  width: 350px;
+  color:gray;
+  height:700px;
+  padding: 30px, 20px;
+  background-color:#FFFFFF;
+  text-align:center;
+  border-radius: 15px;
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  font-family:sans-serif;
+  background-image: #34495e;
+}
+
+.regiForm {
+  width:600px;
+  height:1900px;
+  padding: 20px, 40px;
+  background-color:#FFFFFF;
+  text-align:center;
+  border-radius: 15px;
+  margin: 3px;
+  padding: 3px;
+  text-decoration: none;
+  font-family:sans-serif;
+  background-image: #34495e;
+}
+
+.updateForm {
+  margin-top: 30px;
+  width:700px;
+  height:650px;
+  /* padding: 20px, 40px; */
+  background-color:#FFFFFF;
+  color:gray ;
+ /*  text-align:center; */
+  border-radius: 25px; 
+  margin-left :10px;
+/*   margin: 10px; */
+/*   padding: 3px; */
+  text-decoration: none;
+  font-family:sans-serif;
+/*   background-image: #34495e; */
+  
+}
+
+.updateAll{
+   padding-top:45px;
+   margin: 50px;
+   margin-left : 120px;
+   width: 850px;
+   height: 850px;
+   border-radius: 45px;
+   background-color: #F5F5F5;
+   
+   
+}
+
+.findIdForm {
+  width:400px;
+  height:700px;
+  padding: 30px, 20px;
+  background-color:#FFFFFF;
+  text-align:center;
+  border-radius: 15px;
+}
+
+.findPwForm  {
+  width:400px;
+  height:700px;
+  padding: 30px, 20px;
+  background-color:#FFFFFF;
+  text-align:center;
+  border-radius: 15px;
+}
+
+.loginForm h2{
+  text-align: center;
+  margin: 30px;
+}
+
+.checkForm {
+  padding-bottom: 30px;
+}
+
+.idForm{
+  border-bottom: 2px solid #adadad;
+  margin: 30px;
+  padding: 10px 10px;
+}
+
+.passForm{
+  border-bottom: 2px solid #adadad;
+  margin: 30px;
+  padding: 10px 10px;
+}
+
+.id {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.checkidpw {
+  width: 65%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.regi {
+  width: 100%;
+  border:none;
+  border-bottom: 2px solid #adadad;
+  outline:none;
+  color: gray;
+  font-size:16px;
+  height:38px;
+  background: none;
+  padding:3px;
+}
+
+.pw {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.loginbtn {
+  margin-bottom: 40px;
+  width:55%;
+  height:40px;
+  background: linear-gradient(125deg,#606ADC,#F9D577,#606ADC);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+  border-radius: 20px;
+}
+
+
+.updatebtn { 
+  margin-top: 30px;
+  margin-bottom: 40px;
+  margin-left:330px;
+  width:25%;
+  height:40px;
+  background: linear-gradient(125deg,#606ADC,#F9D577,#606ADC);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+  border-radius: 20px;
+}
+
+.findbtn {
+  margin-bottom: 40px;
+  width:35%;
+  height:40px;
+  background: linear-gradient(125deg,#606ADC,#F9D577,#606ADC);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+  border-radius: 20px;
+}
+
+.loginbtn:hover {
+  background-position: right;
+}
+
+.findbtn:hover {
+  background-position: right;
+}
+.updatebtn:hover {
+  background-position: right;
+}
+.bottomText {
+  text-align: center;
+}
+/* 마이페이지 개인정보 */
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+.myinfotop{
+   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+   margin-top: 20px;
+   padding-left: 30px;
+   text-align: left;
+}
+
+/* .profileImage{
+   display: flex;
+} */
+
+.wrapper {
+  margin-left : 10px;
+  width: 1000px;
+  padding: 50px 20px;
+  padding-top: 80px;
+ display: flex; 
+  border-radius: 5%;
+  background-image: linear-gradient(-20deg, #F9D577 0%, #F9D577 100%);
+}
+
+/* 관리자페이지 */
+
+.memupdate {
+  width:600px;
+  padding: 20px, 40px;
+  background-color:#FFFFFF;
+  text-align:center;
+  border-radius: 15px;
+  margin: 3px;
+  padding: 3px;
+  text-decoration: none;
+  font-family:sans-serif;
+  background-image: #34495e;
+}
+
+/* 0831 추가 마이페이지 회원탈퇴버튼 */
+.button-48 {
+  appearance: none;
+  background-color: #FFFFFF;
+  border-width: 0;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Clarkson,Helvetica,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1em;
+  margin: 0;
+  opacity: 1;
+  outline: 0;
+  padding: 1.5em 2.2em; 
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-rendering: geometricprecision;
+  text-transform: uppercase;
+  transition: opacity 300ms cubic-bezier(.694, 0, 0.335, 1),background-color 100ms cubic-bezier(.694, 0, 0.335, 1),color 100ms cubic-bezier(.694, 0, 0.335, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.button-48:before {
+  animation: opacityFallbackOut .5s step-end forwards;
+  backface-visibility: hidden;
+  background-color: #EBEBEB;
+  clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateZ(0);
+  transition: clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1), -webkit-clip-path .5s cubic-bezier(.165, 0.84, 0.44, 1);
+  width: 100%;
+}
+
+.button-48:hover:before {
+  animation: opacityFallbackIn 0s step-start forwards;
+  clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+}
+
+.button-48:after {
+  background-color: #FFFFFF;
+}
+
+.button-48 span {
+  z-index: 1;
+  position: relative;
+}

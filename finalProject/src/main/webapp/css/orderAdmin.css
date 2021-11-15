@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+.clickBtn:focus{
+	color: white;
+	background-color: #2773CB;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.btnStyle{
+	background-color: white;
+	color: #2773CB;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.btnArea{
+
+	width: 600px;
+	height: 50px;
+	margin-left: 300px;
+	margin-top: 60px;
+	margin-bottom: 20px;
+}
+
+.searchArea{
+	font-size:12px;
+	width: 50%;
+	/*height: 140px;*/
+	margin-left: 300px;
+}
+
+.refurnArea{
+	width: 700px;
+	height: 160px;
+	margin-left: 300px;
+	margin-bottom: 30px;
+}
+
+.refurnTable{
+	
+	width: 1000px;
+	height: 300px;
+	margin-left: 300px;
+}
+
+.orderTable{
+	width:80%;
+	margin-top: 60px;
+	font-size:12px;
+	/*margin-left: 100px;*/
+}
+
+.twoBtn{
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  color: black;
+  width: 280px;
+  height: 100%;
+  font-size: 25px;
+  border: 1px solid lightgray;
+}
+
+ .twoBtn:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+ .twoBtn:hover {
+  background-color: whitesmoke;
+  border: 1px solid gray;
+  
+}
+
+
+.caltext{
+	float: left;
+	margin-left: 5px;
+}
+
+.calbtn{
+	float: left;
+	margin-left: 15px;
+}
+
+.caltext #datepicker1 {
+	width: 80px;
+	height: 30px;
+}
+.caltext #datepicker2 {
+	width: 80px;
+	height: 30px;
+}
+
+.selbox{
+	width: 100px;
+	float: left;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+
+.seltext{
+	width: 200px;
+	float: left;
+}
+
+.selbtn{
+	width: 70px;
+	float: left;
+}
+
+.otable{
+	border:1px solid #eee;
+	width: 1000px;
+}
+
+.detailBase{ 
+	width: 1000px;
+	height: 500px;
+	margin-left: 150px;
+	margin-top: 100px;
+}
+.orderDetail{
+/*	border:1px solid gray; */
+	width: 100%;
+	height: 170px;
+}
+.orderMember{
+/*	border:1px solid gray; */
+	width: 100%;
+	height: 510px;
+	margin-top: 20px;
+}
+.dTable{
+	width: 100%;
+	height: 120px;
+	border:1px solid gray;
+	margin-top: 20px;
+}
+.mTable{
+	width: 100%;
+	height: 460px;
+	margin-top: 20px;
+}
+
+/* th , td{
+	border:1px solid black;
+}
+
+th{
+	background-color: gray;	
+} */
+
+.rTable{
+	width: 100%;
+	height: 460px;
+	margin-top: 20px;
+}
+
+.rfnBtn{
+	margin-top: 20px;
+	height: 70px;
+}
+.refundBase{
+
+	width: 1000px;
+	height: 600px;
+	margin-left: 200px;
+	margin-top: 50px;
+}
+.refundDetail{
+/*	border:1px solid gray; */ 
+	width: 700px;
+	height: 400px;
+	margin-left: 200px;
+}
+
+

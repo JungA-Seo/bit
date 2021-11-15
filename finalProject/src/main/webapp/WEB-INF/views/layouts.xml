@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	
+	<!-- 로그인 및 회원가입 -->
+	<definition name="login.tiles" template="/WEB-INF/views/layouts-tiles.jsp">
+	 	<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="top_inc" value="/WEB-INF/views/commons/top_inc.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/login/login.jsp" />
+	 	<put-attribute name="bottom_inc" value="/WEB-INF/views/commons/bottom_inc.jsp" />
+	</definition>
+	
+	<definition name="regi.tiles" extends="login.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/regi.jsp" />
+	</definition>
+	
+	<definition name="find.tiles" extends="login.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/findPw.jsp" />
+	</definition>
+	
+	<definition name="findId.tiles" extends="login.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/findId.jsp" />
+	</definition>
+	
+
+
+
+	<!-- 사용자페이지 메인-->
+	<definition name="main.tiles" template="/WEB-INF/views/layouts-tiles.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="top_inc" value="/WEB-INF/views/commons/top_inc.jsp" />
+		<put-attribute name="top_menu" value="/WEB-INF/views/main/top_menu.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/main/main.jsp" />
+		<put-attribute name="bottom_inc" value="/WEB-INF/views/commons/bottom_inc.jsp" />
+	</definition>
+	
+	
+	
+	<!-- 고객지원페이지 -->
+	<definition name="useterms.tiles" extends="main.tiles">
+		<put-attribute name="top_menu" value="/WEB-INF/views/notification/top_userterms.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/notification/useterms.jsp" />
+	</definition>
+	
+	<definition name="privacyPol.tiles" extends="main.tiles">
+		<put-attribute name="top_menu" value="/WEB-INF/views/notification/top_privacy.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/notification/privacyPol.jsp" />
+	</definition>
+	
+	<definition name="locationbase.tiles" extends="main.tiles">
+		<put-attribute name="top_menu" value="/WEB-INF/views/notification/top_location.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/notification/locationbase.jsp" />
+	</definition>
+	
+	
+	
+	<!-- 커뮤니티 -->
+	<definition name="bbs.tiles" extends="main.tiles">
+		<put-attribute name="left_menu" value="/WEB-INF/views/main/bbs/bbs_leftmenu.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/main/bbs/bbslist.jsp" />
+	</definition>
+	
+	<!-- 커뮤니티 게시글 작성-->
+	<definition name="bbswrite.tiles" extends="bbs.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/bbs/bbswrite.jsp" />
+	</definition>
+	
+	<!-- 커뮤니티 디테일(게시글 상세보기) -->
+	<definition name="bbsdetail.tiles" extends="bbs.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/bbs/bbsdetail.jsp" />
+	</definition>
+	
+	<!-- 커뮤니티 게시글 수정 -->
+	<definition name="bbsupdate.tiles" extends="bbs.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/bbs/bbsupdate.jsp" />
+	</definition>
+	
+	
+	
+	
+	
+	
+	<!-- 사용자페이지 액티비티 검색페이지 -->
+	<definition name="main_activity.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/activity/searchpage.jsp" />
+	</definition>
+	<!-- 사용자페이지 액티비티 상세페이지 -->
+	<definition name="main_actdetail.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/activity/detailpage.jsp" />
+	</definition>
+	
+	<!-- 사용자페이지 액티비티 결제페이지 -->
+	<definition name="pay.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/activity/paypage.jsp" />
+	</definition>
+	
+	
+	
+	
+	
+	<!-- 테마여행 검색페이지 -->
+	<definition name="tmsearch.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/theme/tmsearch.jsp" />
+		<put-attribute name="bottom_inc" value="/WEB-INF/views/commons/bottom_inc.jsp" />
+	</definition>
+	
+	<!-- 테마여행 상세페이지 -->
+	<definition name="tmuserdetail.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/theme/tmuserdetail.jsp" />
+	</definition>
+	
+	<!-- 테마여행 결제페이지 -->
+	<definition name="themepay.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/theme/themepaypage.jsp" />
+	</definition>
+	
+	
+	
+	<!-- 마이페이지 내가 쓴 글 -->
+	<definition name="mybbslist.tiles" extends="main.tiles">
+		<put-attribute name="left_menu" value="/WEB-INF/views/main/mypage/mypage_leftmenu.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/main/mypage/mybbslist.jsp" />
+	</definition>
+	<!-- 마이페이지 위시리스트 -->
+	<definition name="wishlist.tiles" extends="mybbslist.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/mypage/wishlist.jsp" />
+	</definition>
+	
+	<!-- 마이페이지 구매내역 -->
+	<definition name="buyhistory.tiles" extends="mybbslist.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/mypage/buyhistory.jsp" />
+	</definition>
+	
+	<!-- 마이페이지 개인정보  -->
+	<definition name="myInfo.tiles" extends="mybbslist.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/mypage/myInfo.jsp" />
+	</definition>
+	
+	<!-- 내정보수정 전 패스워드 체크 -->
+	<definition name="pwdCheck.tiles" extends="mybbslist.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/main/mypage/pwdCheck.jsp" />
+	</definition>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////  -->	
+	
+	
+	
+	<!--관리자페이지 -->
+	<definition name="management.tiles" template="/WEB-INF/views/layouts-tiles.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="top_inc" value="/WEB-INF/views/commons/top_manage.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/management/home.jsp" />
+		<put-attribute name="bottom_inc" value="/WEB-INF/views/commons/bottom_inc.jsp" />
+	</definition>
+	
+	
+	
+	
+	
+	<!-- 관리자페이지 회원관리  -->
+	<definition name="memManagement.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/membermanager/memberlist.jsp" />
+	</definition>
+	
+	<!-- 관리자페이지 회원정보수정 들어가기 -->
+	<definition name="memUpdate.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/membermanager/memUpdate.jsp" />
+	</definition>
+	
+	<!--  관리자페이지 회원등록화면으로 이동 -->
+	<definition name="memInsert.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/membermanager/memInsert.jsp" />
+	</definition>
+	
+	
+	
+	
+		<!-- 관리자페이지 커뮤니티 -->
+	<definition name="bbsM.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/bbsmanager/bbsMlist.jsp" />
+	</definition>
+	
+	<!-- 관리자페이지 커뮤니티 새 글 작성 -->
+	<definition name="bbsMwrite.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/bbsmanager/bbsMwrite.jsp" />
+	</definition>
+	
+	<!-- 관리자페이지 커뮤니티 게시글 수정 -->
+	<definition name="bbsMupdate.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/bbsmanager/bbsMupdate.jsp" />
+	</definition>
+	
+	
+	
+	
+	
+	
+	<!-- 관리자페이지 액티비티 -->
+	<definition name="activity.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/activitymanager/actlist.jsp" />
+	</definition>
+	
+	<definition name="actwrite.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/activitymanager/actwrite.jsp" />
+	</definition>
+	
+	<definition name="actdetail.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/activitymanager/actdetail.jsp" />
+	</definition>
+	
+	<definition name="actupdate.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/activitymanager/actupdate.jsp" />
+	</definition>
+	
+	
+	
+	
+	
+	
+	<!--관라자페이지 테마여행 -->
+	<definition name="thememainList.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/thememanager/tmlist.jsp" />
+	</definition>
+	
+	<definition name="tmwrite.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/thememanager/tmwrite.jsp" />
+	</definition>
+	
+	<definition name="tmdetail.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/thememanager/tmdetail.jsp" />
+	</definition>
+	
+	<definition name="themeupdate.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/thememanager/themeupdate.jsp" />
+	</definition>
+	
+	
+	<!-- 관리자페이지 문의관리 -->
+	<definition name="chating.tiles" extends="management.tiles">
+      	<put-attribute name="main" value="/WEB-INF/views/management/chating.jsp" />
+   	</definition>
+   	
+   	<!-- 관리자페이지 결제관리 -->
+	<definition name="orderHistory.tiles" extends="management.tiles">
+		<put-attribute name="top_menu" value="/WEB-INF/views/management/ordermanager/orderHistory.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/payMain.jsp" />
+	</definition>
+	
+	<definition name="payMain.tiles" extends="orderHistory.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/payMain.jsp" />
+	</definition>	
+	
+	<definition name="refundMain.tiles" extends="orderHistory.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/refundMain.jsp" />
+	</definition>
+	
+	<definition name="orderDetail.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/oDetail.jsp" />
+	</definition>
+
+	<definition name="refund.tiles" extends="management.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/refund.jsp" />
+	</definition>
+	
+	<definition name="refunding.tiles" extends="orderHistory.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/refunding.jsp" />
+	</definition>
+	
+	<definition name="completeRefund.tiles" extends="orderHistory.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/ordermanager/refundEnd.jsp" />
+	</definition>
+	
+	
+	<!-- 관리자페이지 통계 -->
+	<definition name="statisic.tiles" extends="management.tiles">
+		<put-attribute name="top_menu" value="/WEB-INF/views/management/statisicmanager/statisicHeader.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/management/statisicmanager/salesMain.jsp" />
+	</definition>
+	
+	<definition name="salesMain.tiles" extends="statisic.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/statisicmanager/salesMain.jsp" />
+	</definition>
+	
+	<definition name="memberMain.tiles" extends="statisic.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/statisicmanager/memberMain.jsp" />
+	</definition>
+	
+	<definition name="newMemberMain.tiles" extends="statisic.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/management/statisicmanager/newMemberMain.jsp" />
+	</definition>
+	
+	   	
+</tiles-definitions>

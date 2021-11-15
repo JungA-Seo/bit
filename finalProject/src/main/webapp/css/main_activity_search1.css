@@ -1,0 +1,160 @@
+@charset "UTF-8";
+
+a:link{
+	text-decoration: none;
+}
+
+/* -----화면기본셋팅------ */
+.searchbar{
+	width: 100%;
+	height: 150px;
+	padding-top: 20px;
+}
+.body{
+	width: 100%;
+	height: 80%;
+}
+.leftmenu{
+	float: left;
+	height: 1800px;
+}
+.selectBox{
+	width: 300px;
+	height: 700px;
+	text-align: left;
+	border-radius: 20px;
+	position: sticky;
+	top: 100px;
+}
+.list_contents{
+	float: left;
+	width: 500px;
+	height: 100%;
+}
+.map_contents{
+	float: left;
+	width: 500px;
+	height: 1800px;
+}
+#map{
+	position: sticky;
+	top: 85px;
+}
+/* --------------- */
+
+/* leftmenu */
+
+
+/* 검색창 */
+#search_box{
+	padding-top: 1px;
+	width: 600px;
+	height: 80px;
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	box-shadow: 0 0 0 rgba(0,0,0,0.20), 0 6px 6px rgba(0,0,0,0.13);
+}
+#search_box:hover{
+	box-shadow: 0 2px 5px rgba(0,0,0,0.16), 0 10px 10px rgba(0,0,0,0.25);
+}
+.inputBox{
+	border-color: white;
+	border-right-color: #D8D8D8;
+	margin-right: 10px;
+}
+#searchBtn:hover{
+	background-color: black;
+	opacity: 0.6;
+	transition: 0.3s;
+}
+#daterange{
+	border-color: white;
+}
+
+/* 지도검색 */
+.wrap {
+	border-radius: 50px;
+	position: absolute; 
+	bottom: 20px;
+	width: 230px;
+	height: 220px;
+	margin-left: -100px;
+	text-align: left;
+	font-size: 13px;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+}
+.wrap .info {
+	border-radius: 30px;
+	color: black; 
+}
+
+.info .desc {
+	height: 50px;
+	padding: 5px;
+}
+.desc .jibun {
+	color: #888;
+	margin: 5px;
+}
+.desc .title{
+	font-size: 15px;
+	margin-left: 5px;
+	font-weight: bold;
+}
+.info .img {
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+}
+
+/* selectBox */
+.subjects{
+	font-weight: bold;
+	font-size: 18px;
+}
+._category, ._price, ._time, ._order{
+	margin: 10px;
+	font-size: 13px;
+}
+/* 카드 */
+.card {
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	text-decoration: none;
+	color: black;
+	border-radius: 30px;
+}
+.card:hover {
+	box-shadow: 0 7px 15px rgba(0,0,0,0.10), 0 5px 5px rgba(0,0,0,0.13);
+	text-decoration: none;	
+}
+.card-img-top{
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+}
+.card-loc{
+	font-size: 15px;
+	color: #A4A4A4;
+}
+
+.card-title{
+	font-weight: bold;
+	color: black;
+}
+.card-text{
+	font-size: 18px;
+	color: black;
+}
+.priceRange{
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: black;
+}
+.liked{
+	position: absolute;
+	right: 3%;
+    bottom: 3%;
+}
+.liked:hover{
+	background-color: white;
+	opacity: 0.6;
+	transition: 0.3s;
+}

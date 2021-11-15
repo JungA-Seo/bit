@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Activity">
+ 	<!-- 관리자페이지 -->
+ 	<select id="getActivityList" parameterType="com.flenda.www.dto.SearchParam" resultType="com.flenda.www.dto.ActivityDto">
+ 		SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, BUSINESSPHONENUM, CATEGORY, ADDRESS, 
+			   HOSTINTRO, TITLE, MAXPEOPLE, INCLUDED, TIMETAKE, TICKET, GOODSEXPLAIN, USEINFO, REGIDATE, LATITUDE, LONGITUDE, REIVEWNUM, REVIEWAVG, COUNTSELL 
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY SELLSEQ DESC) AS RNUM,
+	  		    SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, BUSINESSPHONENUM, CATEGORY, ADDRESS, 
+ 				HOSTINTRO, TITLE, MAXPEOPLE, INCLUDED, TIMETAKE, TICKET, GOODSEXPLAIN, USEINFO, REGIDATE, LATITUDE, LONGITUDE, REIVEWNUM, REVIEWAVG, COUNTSELL
+		  	   FROM ACTIVITY
+			   WHERE 1=1
+					<if test="choice == 'sellSeq'">
+						AND SELLSEQ LIKE '%'||#{search}||'%'
+					</if>
+					<if test="choice == 'id'">
+						AND HOSTID LIKE '%'||#{search}||'%'
+					</if>
+					<if test="choice == 'title'">
+						AND TITLE LIKE '%'||#{search}||'%'
+					</if>
+					<if test="choice == 'address'">
+						AND ADDRESS LIKE '%'||#{search}||'%'
+					</if>
+					<if test="choice == 'bizNum'">
+						AND BUSINESSNUMBER LIKE '%'||#{search}||'%'
+					</if>
+					<if test="choice == 'bizName'">
+						AND BUSINESSNAME LIKE '%'||#{search}||'%'
+					</if>
+					<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+						AND TO_CHAR(REGIDATE, 'YYYYMMDD') BETWEEN #{ startdate } AND #{ enddate }
+					</if>
+			   ORDER BY SELLSEQ DESC)
+     WHERE RNUM BETWEEN 1 + (10*#{pageNumber}) AND 10 + (10*#{pageNumber})
+ 	</select>
+ 	<select id="getActCount" parameterType="com.flenda.www.dto.SearchParam" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM ACTIVITY
+		WHERE 1=1
+			<if test="choice == 'sellSeq'">
+				AND SELLSEQ LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice == 'id'">
+				AND HOSTID LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice == 'title'">
+				AND TITLE LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice == 'address'">
+				AND ADDRESS LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice == 'bizNum'">
+				AND BUSINESSNUMBER LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice == 'bizName'">
+				AND BUSINESSNAME LIKE '%'||#{search}||'%'
+			</if>
+			<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+				AND TO_CHAR(REGIDATE, 'YYYYMMDD') BETWEEN #{ startdate } AND #{ enddate }
+			</if>
+	</select>
+ 	<insert id="addActivity" parameterType="com.flenda.www.dto.ActivityDto">
+		INSERT INTO ACTIVITY(SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, BUSINESSPHONENUM, CATEGORY, ADDRESS, 
+							HOSTINTRO, TITLE, MAXPEOPLE, INCLUDED, TIMETAKE, TICKET, GOODSEXPLAIN, USEINFO, REGIDATE, LATITUDE, LONGITUDE, REIVEWNUM, REVIEWAVG, COUNTSELL)
+		VALUES(ACTIVITY_SEQ.NEXTVAL, #{ businessName }, #{ businessNumber }, #{ hostId }, #{ businessPhoneNum }, #{ category }, 
+				#{ address }, #{ hostintro }, #{ title }, #{ maxPeople }, #{ included },#{ timetake }, #{ ticket }, #{ goodsExplain },
+				#{ useInfo }, SYSDATE, #{ latitude }, #{ longitude }, 0, '0', 0)		 	
+ 	</insert>
+ 	<select id="getActivity" parameterType="Integer" resultType="com.flenda.www.dto.ActivityDto">
+ 		SELECT *
+ 		FROM ACTIVITY
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<select id="getSeq" parameterType="String" resultType="Integer">
+ 		SELECT SELLSEQ
+ 		FROM ACTIVITY
+ 		WHERE TITLE=#{ title }
+ 	</select>
+ 	<update id="updateAct" parameterType="com.flenda.www.dto.ActivityDto">
+ 		UPDATE ACTIVITY
+ 		SET BUSINESSNAME=#{ businessName },BUSINESSNUMBER=#{ businessNumber },BUSINESSPHONENUM=#{ businessPhoneNum },
+ 			CATEGORY=#{ category },ADDRESS=#{ address },HOSTINTRO=#{ hostintro },TITLE=#{ title },MAXPEOPLE=#{ maxPeople },INCLUDED=#{ included },
+ 			TIMETAKE=#{ timetake },TICKET=#{ ticket },GOODSEXPLAIN=#{ goodsExplain },USEINFO=#{ useInfo }
+ 			<if test="latitude != null and latitude != '' and longitude != null and longitude != ''">
+				,LATITUDE=#{ latitude },LONGITUDE=#{ longitude }
+			</if>
+ 		WHERE SELLSEQ=#{ sellSeq }
+ 	</update>
+ 	<delete id="deleteAct" parameterType="Integer">
+ 		DELETE FROM ACTIVITY
+ 		WHERE SELLSEQ=#{ seq }
+ 	</delete>
+ 	<!-- 사용자페이지 -->
+ 	<select id="main_getActivityList" parameterType="com.flenda.www.dto.Act_SearchDto" resultType="com.flenda.www.dto.ActivityDto">
+ 		SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, BUSINESSPHONENUM, CATEGORY, ADDRESS, 
+			HOSTINTRO, TITLE, MAXPEOPLE, INCLUDED, TIMETAKE, TICKET, GOODSEXPLAIN, USEINFO, REGIDATE, LATITUDE, LONGITUDE, REIVEWNUM, REVIEWAVG, COUNTSELL 
+ 		<if test="orders == 'recommended'">
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REIVEWNUM DESC, REVIEWAVG DESC, COUNTSELL DESC) AS RNUM,
+ 		</if>
+ 		<if test="orders == 'score'">
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REVIEWAVG DESC) AS RNUM,
+ 		</if>
+ 		<if test="orders == 'review'">
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REIVEWNUM DESC) AS RNUM,
+ 		</if>
+ 		<if test="orders == 'sell'">
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY COUNTSELL DESC) AS RNUM,
+ 		</if>
+ 		<if test="orders == 'newitem'">
+ 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REGIDATE DESC) AS RNUM,
+ 		</if>
+ 				SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, BUSINESSPHONENUM, CATEGORY, ADDRESS, 
+			HOSTINTRO, TITLE, MAXPEOPLE, INCLUDED, TIMETAKE, TICKET, GOODSEXPLAIN, USEINFO, REGIDATE, LATITUDE, LONGITUDE, REIVEWNUM, REVIEWAVG, COUNTSELL 
+ 			  FROM ACTIVITY
+ 			  WHERE 1=1
+ 			  <if test="input != '' and input != null"><!-- 검색입력창 -->
+ 			  	AND ADDRESS LIKE '%'||#{ input }||'%'
+ 			  </if>
+ 			  <if test="sdate != 'all' and edate != 'all'"><!-- 일정검색 -->
+				AND SELLSEQ IN (SELECT SELLSEQ
+								FROM OPTIONS
+								WHERE STARTDATE >= #{ sdate } AND #{ edate } >= STARTDATE
+									OR ENDDATE >= #{ sdate } AND #{ edate } >= ENDDATE)
+			  </if>
+			  <if test="category != 'all'"><!-- 카테고리 -->
+ 			  	AND CATEGORY=#{ category }
+ 			  </if>
+ 			  <if test="sprice != null and eprice != null"><!-- 투어비용 -->
+				AND SELLSEQ IN (SELECT SELLSEQ
+								FROM OPTIONS
+								WHERE OPPRICE BETWEEN #{ sprice } AND #{ eprice } )
+			  </if>
+			  <if test="etime != 23"><!-- 시간 -->
+				AND SELLSEQ IN (SELECT SELLSEQ
+								FROM OPTIONS
+								WHERE SUBSTR(STARTDATE, 10, 2) >= #{ stime } AND #{ etime } >= SUBSTR(ENDDATE, 10, 2) )
+			  </if>
+ 			  )
+ 		WHERE RNUM BETWEEN 1 + (5*#{ pageNumber }) AND 5 + (5*#{ pageNumber })
+ 	</select>
+ 	<select id="allcount" parameterType="com.flenda.www.dto.Act_SearchDto" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM ACTIVITY
+		WHERE 1=1
+		<if test="input != '' and input != null"><!-- 검색입력창 -->
+		  	AND ADDRESS LIKE '%'||#{ input }||'%'
+		</if>
+		<if test="sdate != 'all' and edate != 'all'"><!-- 일정검색 -->
+			AND SELLSEQ IN (SELECT SELLSEQ
+							FROM OPTIONS
+							WHERE #{ sdate } >= SUBSTR(STARTDATE, 1, 8) AND SUBSTR(ENDDATE, 1, 8) >= #{ sdate }
+								OR #{ edate } >= SUBSTR(STARTDATE, 1, 8) AND SUBSTR(ENDDATE, 1, 8) >= #{ edate })
+	    </if>
+	    <if test="category != 'all'"><!-- 카테고리 -->
+		  	AND CATEGORY=#{ category }
+		</if>
+		<if test="sprice != null and eprice != null"><!-- 투어비용 -->
+			AND SELLSEQ IN (SELECT SELLSEQ
+							FROM OPTIONS
+							WHERE OPPRICE BETWEEN #{ sprice } AND #{ eprice } )
+	    </if>
+	    <if test="etime != 23"><!-- 시간 -->
+				AND SELLSEQ IN (SELECT SELLSEQ
+								FROM OPTIONS
+								WHERE SUBSTR(STARTDATE, 10, 2) >= #{ stime } AND #{ etime } >= SUBSTR(ENDDATE, 10, 2) )
+	    </if>
+	</select>
+	<select id="referAct" parameterType="String" resultType="com.flenda.www.dto.ActivityDto">
+		SELECT *
+		FROM ACTIVITY
+		WHERE ADDRESS LIKE '%'||#{ location }||'%'
+	</select>
+	
+	<update id="addSellCount" parameterType="com.flenda.www.dto.OrdersDto">
+		UPDATE ACTIVITY
+		SET COUNTSELL = COUNTSELL + #{ totalCount }
+		WHERE SELLSEQ = #{ orderSeq }
+	</update>
+	<update id="addreivewNum" parameterType="com.flenda.www.dto.ActivityDto">
+		UPDATE ACTIVITY
+		SET REIVEWNUM = #{ reivewNum }
+		WHERE SELLSEQ = #{ sellSeq }
+	</update>
+	<update id="addreviewAvg" parameterType="com.flenda.www.dto.ActivityDto">
+		UPDATE ACTIVITY
+		SET REVIEWAVG = #{ reviewAvg }
+		WHERE SELLSEQ = #{ sellSeq }
+	</update>
+	<select id="main_refer" resultType="com.flenda.www.dto.ActivityDto">
+		SELECT *
+		FROM ACTIVITY
+		ORDER BY REIVEWNUM DESC, REVIEWAVG DESC, COUNTSELL DESC
+	</select>
+ </mapper>

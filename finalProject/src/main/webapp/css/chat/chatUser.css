@@ -1,0 +1,251 @@
+@charset "UTF-8";
+
+
+.btn_grp{
+	display:none;	
+}
+
+.btn_grp.hide{
+	display:inline-block;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background-color: #606ADC;
+	color: white;
+}
+.movebtn{
+	position: fixed;
+	z-index: 9999;
+	right: 50px;
+	bottom: calc(50px + 60px);
+}
+
+.btn_grp.hide:hover{
+	color: #606ADC;
+	background-color: white;
+}
+
+
+.LuChatBtn.hide{
+	display: none;
+}
+
+
+.LuChatBtn a{
+  text-decoration:none;
+}
+.LuChatBtn{
+  background:#606ADC;
+  padding:10px;
+  height: 35px;
+  width: 35px;
+  border-radius:30px;
+  line-height:35px;
+  box-shadow:0px 2px 8px rgba(0,0,0,0.3);
+  color:#fff;
+  position:fixed;
+  right:50px;
+  bottom:50px;
+  transition:all 0.2s;
+  background-image:url('http://www.liberty.edu/media/14140/icons/ic_chat.svg');
+  background-repeat:no-repeat;
+  background-position:calc(100% - 17.5px) center;
+  box-sizing: content-box;
+  z-index:999;
+}
+.LuChatBtn.expanded{
+  width: 200px;
+}
+.LuChatBtn__helper{
+  opacity:0;
+  transition:all 0.2s;
+  color: #fff;
+  line-height: 35px;
+  text-indent: 1.5em;
+}
+.LuChatBtn__helper.active{
+  opacity:1;
+} 
+.LuChatBtn.active{
+  border-radius:30px 0px 30px 30px;
+  width: 35px;
+  background-image:url('http://www.liberty.edu/media/14140/icons/baseline-clear-24px.svg');
+  background-size: 24px;
+    background-position: calc(100% - 17.5px) 45%;
+}
+
+.LuChatBtn.active .LuChatBtn__helper{
+  display:none;
+}
+.LuChatHeader{
+  height: 50px;
+  width: 100%;
+  color:#fff;
+  background:#606ADC;
+  line-height:50px;
+  font-weight:700;
+  padding:0px 20px;
+  font-size:1em;
+}
+  .chatWindow{
+    display:none;
+    font-family: 'Roboto', sans-serif;
+    color:#000;
+    background:#fff;
+	position:fixed;
+    right: 50px;
+    bottom: calc(50px + 60px);
+	border: 1px solid #d8d8d8;
+    width: 300px;
+		height:400px;
+    overflow:hidden;
+    z-index:999;
+}
+.chatWindow.active{
+  display:block;
+}
+input[name=question]{
+  height: 50px;
+  width: 80%;
+  box-sizing:border-box;
+  border:0;
+  padding:0px 10px;
+  float:left;
+}
+.chatSendBtn{
+  width: 20%;
+  box-sizing:border-box;
+  border:0;
+  height: 50px;
+  margin-top:0px;
+  background:#606ADC;
+  color:#fff;
+  line-height:50px;
+}
+  .chatWindow__chat{
+  height:calc(400px - 100px);
+        padding: 10px;
+	overflow-Y:auto;
+    overflow-X:hidden;
+	overflow-wrap: break-word;
+	font-size:0.875em;
+    box-sizing:border-box;
+    position:relative;
+  }
+
+.chatInputHolder{
+  position:relative;
+}
+.chatInputHolder:after{
+    content: '';
+    height: 25px;
+    width: 140%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2px;
+    box-shadow: 0px -2px 10px rgba(0,0,0,0.05);
+  z-index: -1;
+}
+  .chat__question{
+  width:100%;
+  }
+  .chat__question:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+    .chat__response{
+  width:100%;
+  }
+    .chat__response:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+    .chat__question__text{
+	padding:10px;
+	border-radius: 0px 5px 5px 5px;
+	background-color:#a9d4ff;
+	float:left;
+	  max-width:calc(100% - 8px);
+	  position:relative;
+	  margin-left: 8px;
+}
+  .chat__question__text:after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 8px solid #a9d5ff;
+}
+  .chat__response__text{
+	text-align:right;
+	padding:10px;
+	border-radius: 5px 0px 5px 5px;
+	background-color:#eee;
+	float:right;	
+	max-width:calc(100% - 8px);
+	position:relative;
+	margin-right: 8px;
+}
+    .chat__response__text:after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 0px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #eee;
+}
+  
+  .chating{
+background:#eee;
+  font-size:10px;
+ float:right;
+  border-radius: 5px 0px 5px 5px;
+  padding:.75em 0.75em 1.25em .75em;
+  height: 1.5em;
+	margin-right:8px;
+	position:relative;
+}
+  
+  .chating:after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 0px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #eee;
+}
+
+@keyframes jump {
+  0% {
+    transform:translateY(-50%);
+  }
+  50%{
+    transform:translateY(0%);
+  }
+  100% {
+    transform:translateY(-50%);
+  }
+}
+
+@media (max-width: 1024px) {
+  .LuChatBtn{
+    right:10px;
+  }
+  .chatWindow{
+    right:10px;
+  }
+}

@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.budget{
+	width: 100%;
+	height: 30px;
+}
+.b-kinds1{
+	width: 20%;
+	height: 100%;
+	border: 3px solid red;
+	float: left;
+}
+
+.b-kinds2{
+	width: 30%;
+	height: 100%;
+	border: 3px solid orange;
+	float: left;
+}
+
+.b-kinds3{
+	width: 20%;
+	height: 100%;
+	border: 3px solid yellow;
+	float: left;
+}
+
+.b-kinds4{
+	width: 30%;
+	height: 100%;
+	border: 3px solid green;
+	float: left;
+}

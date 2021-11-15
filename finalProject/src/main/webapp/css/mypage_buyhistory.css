@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+
+.card{
+	width: 75%;
+	margin-left: 10px;
+	margin: 20px;
+}
+.card-header{
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+}
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+.buytop{
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+	margin-top: 20px;
+	padding-left: 30px;
+	text-align: left;
+}
+.nobuyList{
+	font-size: 25px;
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+	margin: 200px 60px 20px 0px;
+}
+
+.review{
+	
+	padding-top: 20px;
+	text-align: center;
+	padding-left: 20px;
+	font-size: 12pt;
+	font-weight: bold;
+	
+}
+
+.onepage{
+	float: left;
+	width: 60%;
+	height: 120px;
+	/* background-color: #eee;	  */
+	text-align: left;
+	font-size: 12pt;
+	
+}
+
+.twopage{
+	text-align:left;
+	width: 60%;
+	/* height: 110px; */
+	float:left; 
+	/* background-color: yellow; */
+	/* margin-top: -30px; */
+	
+}
+
+.reviewtable{
+	width: 30%;
+	height: 140px;
+	/* background-color: skyblue; */
+	margin-left: 5px;
+	text-align: center;
+	display: inline;
+
+}
+
+.arrowbtn{
+	float:left;
+	width: 100%;
+	height: 20px;
+   	/* background-color: red;  */
+}
+
+#point{
+	font-weight: bold;
+	font-size: 15pt;
+}
+
+#page1txt{
+	font-size: 12pt;
+	margin-left: 10px;
+}
+#page2txt{
+	font-size: 12pt;
+	margin-left: 10px;
+}
+#po{
+	color: red;
+}
+
+.canclewrite{
+	float: left;
+	text-align: left;
+	height: 70px;
+	width: 100%;
+	margin: 20px;
+}
+.canclewrite a{
+	margin-bottom: 10px;
+}

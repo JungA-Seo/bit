@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Member">
+ 	
+ 	<select id="getId" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT NVL(COUNT(*),0)
+ 		FROM MEMBER
+ 		WHERE ID=#{id}
+ 	</select>
+ 
+ 	<!-- 0816 -->
+ 	<select id="getEmail" parameterType="java.lang.String" resultType="java.lang.Integer">
+ 		SELECT NVL(COUNT(*),0)
+ 		FROM MEMBER
+ 		WHERE EMAIL =#{email}
+ 	</select>
+ 
+ 	<insert id="addMember" parameterType="com.flenda.www.dto.MemberDto">
+ 		INSERT INTO MEMBER(SEQ, ID, PWD, NAME, BUSINESSNAME, BUSINESSNUMBER, ADDRESS, GENDER, BIRTHDAY, NEWFILENAME, EMAIL, AUTH, POINT, JOINDATE)
+ 		VALUES (MEM_SEQ.NEXTVAL, #{ id }, #{ pwd }, #{ name }, #{ businessName }, #{ businessNumber }, #{ address }, #{ gender }, #{ birthday }, #{ newFilename }, #{ email }, #{ auth }, 0, SYSDATE )
+ 	</insert>	
+ 	
+ 	<select id="login" parameterType="com.flenda.www.dto.MemberDto"	resultType="com.flenda.www.dto.MemberDto">
+		SELECT *
+		FROM MEMBER
+		WHERE ID=#{id} AND PWD=#{pwd}
+	</select>
+	
+ 	<update id="add500point" parameterType="String">
+ 		UPDATE MEMBER
+ 		SET POINT=POINT+500
+ 		WHERE ID=#{id}
+ 	</update>
+ 	
+ 	<update id="add1000point" parameterType="String">
+ 		UPDATE MEMBER
+ 		SET POINT=POINT+1000
+ 		WHERE ID=#{id}
+ 	</update>
+ 	
+ 	<update id="deductPoint" parameterType="com.flenda.www.dto.MemberDto">
+ 		UPDATE MEMBER
+ 		SET POINT=POINT-#{ point }
+ 		WHERE ID=#{ id }
+ 	</update>
+ 	
+ 	<select id="getNewFilename" parameterType="String" resultType="String">
+ 		SELECT NEWFILENAME
+ 		FROM MEMBER
+ 		WHERE ID=#{id}
+ 	</select>
+ 	
+ 	<!-- 0812 -->
+	<update id="updatePw" parameterType="com.flenda.www.dto.MemberDto" >
+		UPDATE MEMBER
+		SET PWD = #{pwd} 
+		WHERE ID =#{id}
+	</update>
+	
+	<select id="readMember"  parameterType="java.lang.String" resultType ="com.flenda.www.dto.MemberDto">
+		SELECT *
+		FROM MEMBER
+		WHERE ID=#{id}
+	</select>
+	
+	<select id ="findId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT ID
+		FROM MEMBER
+		WHERE EMAIL =#{ email } 
+	</select>
+	
+	<select id="checkIdEmail" parameterType="com.flenda.www.dto.MemberDto" resultType="Integer">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE ID=#{id} AND EMAIL=#{ email }
+	</select>
+	
+	<delete id ="deleteMember" parameterType="String">
+		DELETE 
+		FROM MEMBER
+		WHERE ID =#{id}
+	</delete> 
+	
+	<!-- 패스워드체크(탈퇴시) -->
+	<select id="pwdCheck" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM MEMBER
+		WHERE ID = #{id} AND PWD = #{pwd}
+	</select>
+	
+	<select id="getInfo" parameterType="java.lang.String" resultType ="com.flenda.www.dto.MemberDto">
+		SELECT *
+		FROM MEMBER
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 마이페이지 정보수정 -->
+	<update id="updateInfo" parameterType="com.flenda.www.dto.MemberDto">
+		UPDATE MEMBER
+			<if test="auth == 2">
+				SET NAME= #{ name }, BUSINESSNAME = #{ businessName }, BUSINESSNUMBER =  #{ businessNumber }, 
+				ADDRESS = #{ address }, GENDER = #{ gender }, BIRTHDAY = #{ birthday }, EMAIL = #{ email }
+				<if test="pwd != ''">
+					, PWD = #{ pwd }
+				</if>
+				<if test="newFilename != null">
+					, NEWFILENAME = #{ newFilename }
+				</if>	
+			</if>
+			<if test="auth == 3">
+				SET NAME= #{ name }, 
+				ADDRESS = #{ address }, GENDER = #{ gender }, BIRTHDAY = #{ birthday }, EMAIL = #{ email }
+				<if test="pwd != ''">
+					, PWD = #{ pwd }
+				</if>
+				<if test="newFilename != null">
+					, NEWFILENAME = #{ newFilename }
+				</if>
+			</if>
+	 	WHERE ID = #{ id }
+	</update>
+	
+	<!-- 관리자페이지 회원관리 전체리스트 -->
+	<select id="getMemberList" resultType="com.flenda.www.dto.MemberDto" parameterType="com.flenda.www.dto.SearchParam">
+		SELECT SEQ, ID, PWD, NAME, BUSINESSNAME, BUSINESSNUMBER, ADDRESS, GENDER, BIRTHDAY, NEWFILENAME, EMAIL, AUTH, POINT, JOINDATE
+		FROM (SELECT ROW_NUMBER()OVER(ORDER BY JOINDATE DESC) AS RNUM,
+		 		    SEQ, ID, PWD, NAME, BUSINESSNAME, BUSINESSNUMBER, ADDRESS, GENDER, BIRTHDAY, NEWFILENAME, EMAIL, AUTH, POINT, JOINDATE
+		 	  FROM MEMBER
+		  	  WHERE 1=1
+				<if test="choice == 'id'">
+					AND ID LIKE '%'||#{search}||'%'
+				</if>
+				<if test="choice == 'name'">
+					AND NAME LIKE '%'||#{search}||'%'
+				</if>
+				<if test="choice == 'email'">
+					AND EMAIL LIKE '%'||#{search}||'%'
+				</if>
+				<if test="choice == 'businessname'">
+					AND BUSINESSNAME LIKE '%'||#{search}||'%'
+				</if>	
+				<if test="choice == 'auth'">
+					AND AUTH LIKE '%'||#{search}||'%'
+				</if>
+				<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+				 AND TO_CHAR(JOINDATE, 'YYYYMMDD') BETWEEN #{startdate} AND #{enddate}
+				</if>
+			  ORDER BY JOINDATE DESC)
+		WHERE RNUM BETWEEN 1 + (10*#{pageNumber}) AND 10 + (10*#{pageNumber})
+	</select>
+ 
+	<!-- 회원의 총 수 -->
+	<select id="memCount" parameterType="com.flenda.www.dto.SearchParam" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM MEMBER
+		WHERE 1=1
+		<if test="choice == 'id'">
+			AND ID LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'name'">
+			AND NAME LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'email'">
+			AND EMAIL LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'businessname'">
+			AND BUSINESSNAME LIKE '%'||#{search}||'%'
+		</if>	
+		<if test="choice == 'auth'">
+			AND AUTH LIKE '%'||#{search}||'%'
+		</if>
+		<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+		    AND TO_CHAR(JOINDATE, 'YYYYMMDD') BETWEEN #{startdate} AND #{enddate}
+		</if>
+	</select>
+	
+	<!-- 관리자페이지 회원정보수정 -->
+	<update id="memUpdateAf" parameterType="com.flenda.www.dto.MemberDto">
+		UPDATE MEMBER
+			<if test="auth == 2">
+				SET NAME= #{ name }, BUSINESSNAME = #{ businessName }, BUSINESSNUMBER =  #{ businessNumber }, 
+				ADDRESS = #{ address }, GENDER = #{ gender }, BIRTHDAY = #{ birthday }, 
+				EMAIL = #{ email }, AUTH = #{ auth }
+				<if test="pwd != ''">
+					, PWD = #{ pwd }
+				</if>
+				<if test="newFilename != null">
+					, NEWFILENAME = #{ newFilename }
+				</if>		
+			</if>
+			<if test="auth == 3">
+				SET NAME= #{ name }, 
+				ADDRESS = #{ address }, GENDER = #{ gender }, BIRTHDAY = #{ birthday }, 
+				EMAIL = #{ email }, AUTH = #{ auth }
+				<if test="pwd != ''">
+					, PWD = #{ pwd }
+				</if>
+				<if test="newFilename != null">
+					, NEWFILENAME = #{ newFilename }
+				</if>	
+			</if>
+	 	WHERE ID = #{ id }
+	</update>
+ </mapper>

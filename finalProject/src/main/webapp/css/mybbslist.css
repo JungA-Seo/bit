@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.mybbsmain{
+	width: 100%;
+	height: 100%;
+	margin:0 auto;
+}
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+.mybbstop{
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+	margin-top: 20px;
+	padding-left: 30px;
+	text-align: left;
+}
+
+.mybbslist{
+	width: 100%;
+	height: 100%;
+/*	height: 1300px;*/
+	padding-left: 20px;
+/*	border: 1px solid gray;*/
+}
+#bbsone{
+	width: 290px;
+	height: 400px;
+	float: left;
+	margin: 12px;
+/*	border: 1px solid red;*/
+}
+#bbsone img{
+/*	display: flex;*/
+	width: 18rem;
+	height: 200px;
+}
+
+.paging{
+	width: 100%;
+	margin-top: 10px;
+	padding-top: 40px;
+	clear: both;
+/*	border: 1px solid gray;*/
+}

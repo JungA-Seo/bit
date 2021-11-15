@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Theme">
+
+  <!-- 테마관리자 전체리스트 -->
+ <select id="tmlist" resultType="com.flenda.www.dto.ThemeDto" parameterType="com.flenda.www.dto.SearchParam">
+ 	SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+ 			TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+ 	FROM (SELECT ROW_NUMBER()OVER(ORDER BY SELLSEQ DESC) AS RNUM,
+	  		    SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+ 				TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+	  	   FROM THEME
+		   WHERE 1=1
+				<if test="choice == 'category'">
+					AND CATEGORY LIKE '%'||#{search}||'%'
+				</if>
+				<if test="choice == 'title'">
+					AND TITLE LIKE '%'||#{search}||'%'
+				</if>
+				<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+				 AND TO_CHAR(REGIDATE, 'YYYYMMDD') BETWEEN #{startdate} AND #{enddate}
+				</if>
+		   ORDER BY SELLSEQ DESC)
+     WHERE RNUM BETWEEN 1 + (10*#{pageNumber}) AND 10 + (10*#{pageNumber})
+ </select>
+ 
+ <!-- 글 총갯수 -->
+ <select id="writeCount" parameterType="com.flenda.www.dto.SearchParam" resultType="Integer">
+	SELECT NVL(COUNT(*),0)
+	FROM THEME
+	WHERE 1=1
+		<if test="choice == 'category'">
+			AND CATEGORY LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'title'">
+			AND TITLE LIKE '%'||#{search}||'%'
+		</if>
+		<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+		    AND TO_CHAR(REGIDATE, 'YYYYMMDD') BETWEEN #{startdate} AND #{enddate}
+		</if>
+	</select>
+ 
+ <!-- 테마옵션리스트  -->
+  <select id="tmoptionlist" resultType="com.flenda.www.dto.OptionDto">
+ 	SELECT OPTIONSEQ, SELLSEQ, OPCONTENT, STARTDATE, ENDDATE, MAXPEOPLE, OPPRICE, OPCOUNT
+ 	FROM OPTIONS
+ </select>
+ 
+ <!-- 테마 매니져 글작성 -->
+ <insert id="tmwrite" parameterType="com.flenda.www.dto.ThemeDto">
+ 	INSERT INTO THEME (SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+ 			TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE)
+ 	VALUES (TSELL_SEQ.NEXTVAL, #{ businessName }, #{ businessNumber }, #{ hostId }, #{ hostNumber }, #{ category },
+ 			#{ hostAddress }, #{ hostIntro }, #{ title }, #{ minPeople }, #{ transpor }, #{ timetake }, #{ cancleperiod }, 
+ 			#{ included }, #{ unincluded }, #{ meetplace }, #{ goodsExplain }, #{ courseIntro }, #{ useInfo }, SYSDATE, #{ city }, 0, '0', 0, 0 )
+ </insert>
+ <select id="getSeq" parameterType="String" resultType="Integer">
+	SELECT SELLSEQ
+	FROM THEME
+	WHERE TITLE=#{ title }
+ </select>
+ 
+ <!-- 테마 매니져 상세보기 -->
+  <select id="tmdetail" parameterType="Integer" resultType="com.flenda.www.dto.ThemeDto">
+ 	SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+ 			TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+ 	FROM THEME
+ 	WHERE SELLSEQ=#{ sellSeq }
+ </select>
+ 
+ <!-- 테마매니저 판매글 삭제하기 -->
+ <delete id="deletetheme" parameterType="Integer">
+ 	DELETE FROM THEME
+ 	WHERE SELLSEQ=#{ sellSeq }
+ </delete>
+ 
+ <!-- 테마매니저 판매글 수정하기 -->
+ <update id="updatetheme" parameterType="com.flenda.www.dto.ThemeDto">
+	 UPDATE THEME
+ 	 SET BUSINESSNAME=#{ businessName },BUSINESSNUMBER=#{ businessNumber },HOSTID=#{ hostId }, HOSTNUMBER=#{ hostNumber },
+ 	 CATEGORY=#{ category },HOSTADDRESS=#{ hostAddress }, HOSTINTRO=#{ hostIntro }, TITLE=#{ title }, MINPEOPLE=#{ minPeople },
+ 	 TRANSPOR=#{ transpor }, TIMETAKE=#{ timetake }, CANCLEPERIOD=#{ cancleperiod }, INCLUDED=#{ included }, UNINCLUDED=#{ unincluded },
+ 	 MEETPLACE=#{ meetplace },GOODSEXPLAIN=#{ goodsExplain }, COURSEINTRO=#{ courseIntro }, USEINFO=#{ useInfo }, CITY =#{ city }
+ 	 WHERE SELLSEQ=#{ sellSeq }
+ </update>
+ 
+ 
+  <!-- 테마 사용자 전체리스트 2차 취합-->   
+	<select id="tmuserlist" resultType="com.flenda.www.dto.ThemeDto" parameterType="com.flenda.www.dto.ThemeSearchDto">
+	 	SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+	 			TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+	 		
+	 		<if test="soltinglist == 'recent'">		<!-- 최근등록 순 -->
+	 		 FROM (SELECT ROW_NUMBER()OVER(ORDER BY REGIDATE DESC) AS RNUM,
+	 		</if>
+	 		<if test="soltinglist == 'reviewCount'">	<!-- 리뷰개수 순 -->
+	 		 FROM (SELECT ROW_NUMBER()OVER(ORDER BY REVIEWNUM DESC) AS RNUM,
+	 		</if>
+	 	 	<if test="soltinglist == 'reviewAvg'"> 	<!-- 리뷰평점 순 -->
+	 		 FROM (SELECT ROW_NUMBER()OVER(ORDER BY REVIEWAVG DESC) AS RNUM,
+	 		</if>
+	 		<if test="soltinglist == 'highprice'">	<!-- 가격높은 순 -->
+	 		 FROM (SELECT ROW_NUMBER()OVER(ORDER BY HIGHPRICE DESC) AS RNUM,
+	 		</if>
+	 		<if test="soltinglist == 'lowprice'">	<!-- 가격낮은 순 -->
+	 		 FROM (SELECT ROW_NUMBER()OVER(ORDER BY LOWPRICE ASC) AS RNUM,
+	 		</if>
+	 		<if test="soltinglist == 'recommended'">
+	 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REVIEWNUM DESC, REVIEWAVG DESC) AS RNUM,
+	 		</if>
+	 		
+		  		   		 SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+	 						TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+		  	  		FROM THEME
+			  		WHERE 1=1
+			  	 	<if test="city != null and city != ''">
+						AND CITY= #{ city }
+					</if>
+					<if test="category != null and category != ''">
+						AND CATEGORY= #{ category }
+					</if>
+					<if test="minPeople != null and minPeople != 0 and minPeople != 31">
+						AND MINPEOPLE BETWEEN #{ minPeople } AND #{ minPeople }*2
+					</if>
+					<if test="minPeople == 31">
+						AND MINPEOPLE > #{ minPeople }
+					</if>
+					<if test="transpor != 'all'">
+						AND TRANSPOR = #{ transpor }
+					</if> 
+					
+					<if test="search != null and search != ''">
+						AND (CITY LIKE '%'||#{search}||'%'  OR  TITLE LIKE '%'||#{search}||'%')
+					</if>
+			   		)
+	     WHERE RNUM BETWEEN 1 + (5*#{pageNumber}) AND 5 + (5*#{pageNumber})
+ 	</select>
+
+	<!--테마 사용자 글 총 갯수 -->
+	<select id="tmuserCount" parameterType="com.flenda.www.dto.ThemeSearchDto" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM THEME
+		WHERE 1=1
+		<if test="city != null and city != ''">
+			AND CITY= #{ city }
+		</if>
+		<if test="category != null and category != ''">
+			AND CATEGORY= #{ category }
+		</if>
+		<if test="minPeople != null and minPeople != 0">
+			AND MINPEOPLE BETWEEN #{ minPeople } AND #{ minPeople }*2
+		</if>
+		<if test="transpor != 'all'">
+			AND TRANSPOR = #{ transpor }
+		</if> 	
+		<if test="search != null and search != ''">
+			AND (CITY LIKE '%'||#{search}||'%'  OR  TITLE LIKE '%'||#{search}||'%')
+		</if>
+	</select>
+
+ 
+ 
+	<update id="addreivewNum" parameterType="com.flenda.www.dto.ThemeDto">
+		UPDATE THEME
+		SET REVIEWNUM = #{ reviewNum }
+		WHERE SELLSEQ = #{ sellSeq }
+	</update>
+	
+	<update id="addreviewAvg" parameterType="com.flenda.www.dto.ThemeDto">
+		UPDATE THEME
+		SET REVIEWAVG = #{ reviewAvg }
+		WHERE SELLSEQ = #{ sellSeq }
+	</update>
+	 
+	
+	<update id="addhighprice" parameterType="com.flenda.www.dto.ThemeDto">
+		UPDATE THEME
+		SET HIGHPRICE = #{ highprice }
+		WHERE SELLSEQ = #{ sellSeq }
+	</update>
+	
+	<update id="addlowprice" parameterType="com.flenda.www.dto.ThemeDto">
+		UPDATE THEME
+		SET LOWPRICE = #{ lowprice }
+		WHERE SELLSEQ = #{ sellSeq }
+	</update>
+	
+	<select id="recommendList" parameterType="String" resultType="com.flenda.www.dto.ThemeDto">
+		SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+	 		   TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+		FROM THEME
+		WHERE CITY=#{ city } 
+	</select>
+	 
+	 <select id="categoryList" parameterType="String" resultType="com.flenda.www.dto.ThemeDto">
+		SELECT SELLSEQ, BUSINESSNAME, BUSINESSNUMBER, HOSTID, HOSTNUMBER, CATEGORY, HOSTADDRESS, HOSTINTRO, TITLE, MINPEOPLE, TRANSPOR, 
+	 		   TIMETAKE, CANCLEPERIOD, INCLUDED, UNINCLUDED, MEETPLACE, GOODSEXPLAIN, COURSEINTRO, USEINFO, REGIDATE, CITY, REVIEWNUM, REVIEWAVG, HIGHPRICE, LOWPRICE
+		FROM THEME
+		WHERE CATEGORY=#{ category } 
+		ORDER BY REVIEWNUM DESC
+	</select>
+	<select id="main_refer_theme" resultType="com.flenda.www.dto.ThemeDto">
+		SELECT *
+		FROM THEME
+		ORDER BY REVIEWNUM DESC, REVIEWAVG DESC
+	</select>
+</mapper>

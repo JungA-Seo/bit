@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Bbs">
+	
+	<!-- 관리자페이지 -->	
+	
+	
+	<!-- 사용자페이지 -->
+	<!-- 전체 게시글 목록 -->
+	<select id="getBbsList" parameterType="com.flenda.www.dto.BbsParam" resultType="com.flenda.www.dto.BbsDto">
+		SELECT SEQ, ID, CATEGORY, TITLE, CONTENT, NEWFILENAME, ADDRESS, AREA, WDATE,
+				READCOUNT, LIKECOUNT, COMMENTCOUNT, PROFILEIMG
+		FROM
+			<if test="order == null or order == ''">	   
+			(SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+			</if>
+			<if test="order != null and order != ''">
+				<if test="order == 'readCount'">
+				(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM,
+				</if>
+				<if test="order == 'commentCount'">
+				(SELECT ROW_NUMBER()OVER(ORDER BY COMMENTCOUNT DESC) AS RNUM,
+				</if>
+				<if test="order == 'likeCount'">
+				(SELECT ROW_NUMBER()OVER(ORDER BY LIKECOUNT DESC) AS RNUM,
+				</if>
+			</if>
+					SEQ, ID, CATEGORY, TITLE, CONTENT, NEWFILENAME, ADDRESS, AREA, WDATE,
+					READCOUNT, LIKECOUNT, COMMENTCOUNT, PROFILEIMG
+			FROM BBS
+			WHERE 1=1
+				<if test="choice == 'title'">
+					AND TITLE LIKE '%'||#{search}||'%'
+				</if>
+				<if test="choice == 'content'">
+					AND CONTENT LIKE '%'||#{search}||'%'
+				</if>
+				<if test="choice == 'area'">
+					AND AREA LIKE '%'||#{search}||'%'
+				</if>
+				
+				<if test="choice == 'writer'">
+					AND ID=#{search}
+				</if>
+				<if test="area != null and area != ''">	<!-- 지역슬라이드 이미지 버튼 클릭(검색) -->
+					AND AREA=#{area}
+				</if>
+				<if test="category != null and category != ''">	<!-- leftmenu 카테고리별 클릭(검색) -->
+					AND CATEGORY=#{category}
+				</if>
+				<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+					AND TO_CHAR(WDATE, 'YYYYMMDD') BETWEEN #{ startdate } AND #{ enddate }
+				</if>
+			)
+		WHERE RNUM BETWEEN ${start} AND ${end}
+	</select>
+	
+	<!-- 글의 총 수 -->
+	<select id="getBbsCount" parameterType="com.flenda.www.dto.BbsParam" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM BBS
+		WHERE 1=1
+		<if test="choice == 'title'">
+			AND TITLE LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'content'">
+			AND CONTENT LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'area'">
+			AND AREA LIKE '%'||#{search}||'%'
+		</if>
+		<if test="choice == 'writer'">
+			AND ID=#{search}
+		</if>
+		<if test="area != null and area != ''">	<!-- 지역슬라이드 이미지 버튼 클릭(검색) -->
+			AND AREA=#{area}
+		</if>
+		<if test="category != null and category != ''">	<!-- leftmenu 카테고리별 클릭(검색) -->
+			AND CATEGORY=#{category}
+		</if>
+		<if test="startdate != null and startdate != '' and enddate != null and enddate != ''">
+			AND TO_CHAR(WDATE, 'YYYYMMDD') BETWEEN #{ startdate } AND #{ enddate }
+		</if>	
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="writeBbs" parameterType="com.flenda.www.dto.BbsDto">
+		INSERT INTO BBS(SEQ, ID, CATEGORY, TITLE, CONTENT,
+						NEWFILENAME, ADDRESS, AREA, WDATE,
+						READCOUNT, LIKECOUNT, COMMENTCOUNT, PROFILEIMG)
+		VALUES(SEQ_BBS.NEXTVAL, #{ id }, #{ category }, #{ title }, #{ content },
+				#{ newFilename }, #{ address }, #{ area }, SYSDATE,
+				0, 0, 0, #{ profileImg })
+	</insert>
+	
+	<!-- 
+	게시글 작성 안에 있는 여행경비 리스트
+	<insert id="writeExpense" parameterType="com.flenda.www.dto.ExpenseDto">
+		INSERT INTO EXPENSE(ESEQ, SEQ_BBS, CATEGORY, CONTENT, MONEYTYPE, MONEY)
+		VALUES(ESEQ_EXPENSE.NEXTVAL, #{ seq_bbs }, #{ category }, #{ content }, #{ moneytype }, #{ money })
+	</insert>
+	 -->
+
+	<!-- 게시글 한 개 읽기 -->
+						<!-- seq 파라미터로 받아오기 -->
+	<select id="getBbs" parameterType="Integer" resultType="com.flenda.www.dto.BbsDto">
+		SELECT SEQ, ID, CATEGORY, TITLE, CONTENT, NEWFILENAME, ADDRESS, AREA, WDATE, READCOUNT, LIKECOUNT, COMMENTCOUNT, PROFILEIMG
+		FROM BBS
+		WHERE SEQ=#{ seq }
+	</select>
+	
+	<!-- 조회 수 -->
+	<update id="readCount" parameterType="java.lang.Integer">
+		UPDATE BBS
+		SET READCOUNT=READCOUNT+1
+		WHERE SEQ=#{ seq }
+	</update>
+	
+	<!-- 좋아요 클릭 -->
+	<update id="likeCountUp" parameterType="Integer">
+		UPDATE BBS
+		SET LIKECOUNT=LIKECOUNT+1
+		WHERE SEQ=#{ seq }
+	</update>
+	
+	<!-- 좋아요 취소 -->
+	<update id="likeCountDown" parameterType="Integer">
+		UPDATE BBS
+		SET LIKECOUNT=LIKECOUNT-1
+		WHERE SEQ=#{ seq }
+	</update>
+	
+	<!-- 댓글 수 (댓글 작성 시 +1)-->
+	<update id="commentCountUp" parameterType="Integer">
+		UPDATE BBS
+		SET COMMENTCOUNT=COMMENTCOUNT+1
+		WHERE SEQ=#{ seq }
+	</update>
+	
+	<!-- 댓글 수 (댓글 삭제 시 -1)-->
+	<update id="commentCountDown" parameterType="Integer">
+		UPDATE BBS
+		<if test="commentCount > 0"> <!-- 그럴 일 없지만 음수 방지 -->
+		SET COMMENTCOUNT=COMMENTCOUNT-1
+		</if>
+		WHERE SEQ=#{ seq }
+	</update>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBbs" parameterType="com.flenda.www.dto.BbsDto">
+		UPDATE BBS
+		SET CATEGORY=#{ category }, TITLE=#{ title }, CONTENT=#{ content },
+			ADDRESS=#{ address }, AREA=#{ area }
+			<if test="newFilename != null and newFilename != ''">
+			,NEWFILENAME=#{ newFilename }
+			</if>
+		WHERE SEQ=#{ seq }
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBbs" parameterType="Integer">
+		DELETE FROM BBS
+		WHERE SEQ=#{ seq }
+	</delete>
+	
+	<!-- 메인 > 베스트 여행기 -->
+	<select id="main_refer_bbs" resultType="com.flenda.www.dto.BbsDto">
+		SELECT *
+		FROM BBS
+		ORDER BY LIKECOUNT DESC, COMMENTCOUNT DESC
+	</select>
+	
+	 
+	
+	
+	<!-- 게시글 좋아요 기능 -->
+	<!-- 좋아요 체크 -->
+	<insert id="checkLikecheck" parameterType="com.flenda.www.dto.LikecheckDto">
+		INSERT INTO LIKECHECK(LSEQ, ID, SEQ_BBS)
+		VALUES(LSEQ_LIKECHECK.NEXTVAL, #{ id }, #{ seq_bbs })
+	</insert>
+	<!-- 좋아요 리스트 가져가기-->
+	<select id="getLikecheck" parameterType="Integer" resultType="com.flenda.www.dto.LikecheckDto">
+		SELECT *
+		FROM LIKECHECK
+		WHERE SEQ_BBS = #{ seq_bbs }
+	</select>
+	<!-- 좋아요 체크해제 -->
+	<delete id="delLikecheck" parameterType="com.flenda.www.dto.LikecheckDto">
+		DELETE LIKECHECK
+		WHERE SEQ_BBS = #{ seq_bbs } AND ID = #{ id }
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 댓글 기능 -->
+	<!-- 댓글작성 -->
+	<insert id="writeReply" parameterType="com.flenda.www.dto.ReplyDto">
+		INSERT INTO REPLY(RSEQ, ID, PROFILE, SEQ_BBS, REPLY, WDATE)
+		VALUES (RSEQ_REPLY.NEXTVAL, #{ id }, #{ profile }, #{ seq_bbs }, #{ reply }, SYSDATE)
+	</insert>
+	
+	<!-- 전체댓글가져오기 -->								
+	<select id="getReplyList" parameterType="Integer" resultType="com.flenda.www.dto.ReplyDto">
+		SELECT *
+		FROM REPLY
+		WHERE SEQ_BBS = #{ seq_bbs }
+		ORDER BY RSEQ DESC
+	</select>
+	<!-- 댓글가져오기 -->
+	<select id="selectReply" parameterType="Integer" resultType="com.flenda.www.dto.ReplyDto">
+		SELECT *
+		FROM REPLY
+		WHERE RSEQ = #{ rseq }
+	</select>
+	<!-- 댓글수정 -->
+	<update id="updateReply" parameterType="com.flenda.www.dto.ReplyDto">
+		UPDATE REPLY
+		SET REPLY = #{ reply }
+		WHERE RSEQ = #{ rseq }
+	</update>
+	<!-- 댓글삭제 -->
+	<delete id="deleteReply" parameterType="Integer">
+		DELETE FROM REPLY
+		WHERE RSEQ=#{ rseq }
+	</delete>
+	
+	
+</mapper>
+

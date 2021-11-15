@@ -1,0 +1,300 @@
+@charset "UTF-8";
+
+.roomListArea{
+	width: 100%;
+	
+}
+
+
+ .detaillist {
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  color: black;
+  width: 100%;
+  height: 40px;
+  font-size: 25px;
+  border: 1px solid lightgray;
+}
+
+ .detaillist:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+ .detaillist:hover {
+  background-color: whitesmoke;
+  border: 1px solid gray;
+}
+
+.btn-group .button {
+  background-color: #606ADC;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  width: 50px;
+  margin: 2px;
+  border: 0;
+  outline: 0;
+}
+
+.btn-group .button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+.btn-group .button:hover {
+  background-color: gray;
+}
+
+.endBtn{
+	width: 20%;
+	height: 100%;
+	float: left;
+	font-size:20px;
+}
+
+.endBtn .input{
+  font-family: 'Roboto', sans-serif;
+  background-color: #606ADC;
+  border: 2px solid #606ADC;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.endBtn .input:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+.endBtn .input:hover {
+  background-color: gray;
+  border: 2px solid gray;
+}
+
+
+
+.listArea{
+    font-family: 'Roboto', sans-serif;
+    font-size:15px;
+    color:#000;
+    background:#fff;
+	width: 250px;
+	height: 600px;
+	border: 1px solid #d8d8d8;
+    width: 300px;
+    overflow:hidden;
+/*	overflow-y:scroll;*/
+ 	overflow-x:inherit;
+ 	float: left;
+ 	margin-top: 50px;
+	margin-left: 250px; 
+}
+.listHeader{
+  height: 50px;
+  width: 100%;
+  color:#fff;
+  background:#606ADC;
+  line-height:50px;
+  font-weight:700;
+  padding:0px 20px;
+  font-size:1em;
+}
+ 
+.chatWindow_admin{  /* 수정 */
+    font-family: 'Roboto', sans-serif;
+    font-size:15px;
+    color:#000;
+    background:#fff;
+	width: 650px;
+	height: 600px;
+	border: 1px solid #d8d8d8;
+    overflow:hidden;
+/*	overflow-y:scroll;*/
+ 	margin-top: 50px;
+	margin-left: 30px; 
+	float: left;
+}
+
+.btnArea input{
+	color:#fff;
+	background:#606ADC;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	font-weight:700;
+	font-size: 20px;
+}
+
+.btnArea{
+  	height : 120px;
+    padding: 10px;
+	overflow-Y:auto;
+    overflow-X:hidden;
+	overflow-wrap: break-word;
+    box-sizing:border-box;
+
+}
+
+.chatWindow__chat_admin{ /* 수정 */
+	width: 100%;
+  	height:497px;
+        padding: 10px;
+	overflow-Y:auto;
+    overflow-X:hidden;
+	overflow-wrap: break-word;
+    box-sizing:border-box;
+
+}
+
+.chatHead{
+	width: 650px;
+	height: 50px;
+}
+.LuChatHeader_admin{ /* 수정 */
+  height: 100%;
+  width: 80%;
+  color:#fff;
+  background:#606ADC;
+  line-height:50px;
+  font-weight:700;
+  padding:0px 20px;
+  font-size:30px;
+  float: left;
+}
+
+
+input[name=chatInput]{
+  height: 50px;
+  width: 80%;
+  box-sizing:border-box;
+  border:0;
+  float:left;
+}
+.chatSendBtn_admin{ /* 수정 */
+  width: 20%;
+  box-sizing:border-box;
+/*  border:0;*/
+  height: 50px;
+  margin-top:0px;
+  background:#606ADC;
+  color:#fff;
+  line-height:50px;
+}
+
+/* .chatInputHolder{
+  position:relative;
+} 
+.chatInputHolder_admin:after{
+    content: '';
+    height: 25px;
+    width: 140%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2px;
+    box-shadow: 0px -2px 10px rgba(0,0,0,0.05);
+  z-index: -1;
+}
+.chat__question{
+  width:100%;
+  }
+.chat__question:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+.chat__response{
+  width:100%;
+  }
+.chat__response:after {
+    content: '';
+    clear: both;
+    display: block;
+}*/
+.chat__question__text_admin{ 
+	padding:10px;
+	border-radius: 0px 5px 5px 5px;
+	background-color:#a9d4ff;
+	float:left;
+	  max-width:calc(100% - 8px);
+	  position:relative;
+	  margin-left: 8px;
+}
+.chat__question__text_admin:after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 8px solid #a9d5ff;
+}
+.chat__response__text_admin{
+	text-align:right;
+	padding:10px;
+	border-radius: 5px 0px 5px 5px;
+	background-color:#eee;
+	float:right;
+	max-width:calc(100% - 8px);
+	position:relative;
+	margin-right: 8px;
+}
+.chat__response__text_admin:after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 0px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #eee;
+}
+/*  
+.chating{
+background:#eee;
+  font-size:10px;
+ float:right;
+  border-radius: 5px 0px 5px 5px;
+  padding:.75em 0.75em 1.25em .75em;
+  height: 1.5em;
+	margin-right:8px;
+	position:relative;
+}
+  
+.chating:after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 0px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #eee;
+}
+
+@keyframes jump {
+  0% {
+    transform:translateY(-50%);
+  }
+  50%{
+    transform:translateY(0%);
+  }
+  100% {
+    transform:translateY(-50%);
+  }
+}
+
+@media (max-width: 1024px) {
+  .LuChatBtn{
+    right:10px;
+  }
+  .chatWindow{
+    right:10px;
+  }
+}*/

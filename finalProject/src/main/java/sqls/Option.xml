@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Option">
+ 	<insert id="addOption" parameterType="com.flenda.www.dto.OptionDto">
+ 		INSERT INTO OPTIONS(OPTIONSEQ, SELLSEQ, OPCONTENT, STARTDATE, ENDDATE, MAXPEOPLE, OPPRICE)
+ 		VALUES(OPT_SEQ.NEXTVAL, #{ sellSeq }, #{ opcontent }, #{ startDate }, #{ endDate }, #{ maxPeople }, #{ opPrice })
+ 	</insert>
+ 	<select id="getOptionList" parameterType="Integer" resultType="com.flenda.www.dto.OptionDto">
+ 		SELECT *
+ 		FROM OPTIONS
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 		<select id="getOption" parameterType="Integer" resultType="com.flenda.www.dto.OptionDto">
+ 		SELECT *
+ 		FROM OPTIONS
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<delete id="deleteOption" parameterType="Integer">
+ 		DELETE FROM OPTIONS
+ 		WHERE OPTIONSEQ=#{ seq }
+ 	</delete>
+ 	<delete id="deleteOps" parameterType="Integer">
+ 		DELETE FROM OPTIONS
+ 		WHERE SELLSEQ=#{ seq }
+ 	</delete>
+ 	<select id="detailOptions" parameterType="com.flenda.www.dto.OptionDto" resultType="com.flenda.www.dto.OptionDto">
+ 		SELECT *
+ 		FROM OPTIONS
+ 		WHERE #{ startDate } >= SUBSTR(STARTDATE, 1, 8) AND SUBSTR(ENDDATE, 1, 8) >= #{ startDate }
+ 			AND SELLSEQ = #{ sellSeq }
+ 	</select>
+ 	<select id="getMinprice" parameterType="Integer" resultType="Integer">
+ 		SELECT MIN(OPPRICE)
+ 		FROM OPTIONS
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	<select id="getMaxprice" parameterType="Integer" resultType="Integer">
+ 		SELECT MAX(OPPRICE)
+ 		FROM OPTIONS
+ 		WHERE SELLSEQ=#{ seq }
+ 	</select>
+ 	
+ 	<!-- 테마유저리스트에서 옵션 데이터 받기 -->
+ 	<select id="tmuserOptionList" resultType="com.flenda.www.dto.OptionDto">
+ 		SELECT *
+ 		FROM OPTIONS
+ 	</select>
+ 	
+ </mapper>

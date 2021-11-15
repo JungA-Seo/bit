@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+.primaryMenu{
+/*	border: 2px solid silver;*/
+}
+
+.categoryMenu{
+/*	border: 2px solid orange;*/
+}
+.cText{
+/*	border: 2px solid green;*/
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.cMenu{
+/*	border: 2px solid pink;*/
+}
+.cMenu li{
+	margin-bottom: 10px;
+}
+.cMenu button{
+	width: 150px;
+}
+
+.ordersMenu{
+/*	border: 2px solid skyblue;*/
+}
+.oText{
+/*	border: 2px solid gold;*/
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.oMenu{
+/*	border: 2px solid olive;*/
+}
+.oMenu li{
+	margin-bottom: 10px;
+}
+.oMenu button{
+	width: 150px;
+}

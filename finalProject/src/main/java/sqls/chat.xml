@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Chat">
+
+	<!-- 방 존재 여부 확인 & 방정보 가져오기 -->
+	<select id="getRoom" parameterType="java.lang.String" resultType="com.flenda.www.dto.ChatDto">
+		SELECT NUM,NAME,TOTALCOUNT,REMAINCOUNT,CATEGORY
+		FROM FINAL_CHAT 
+		WHERE NAME=#{name}
+	</select>
+
+	<!-- 방 생성 -->
+	<insert id="createChatRoom" parameterType="com.flenda.www.dto.ChatDto">
+	INSERT INTO FINAL_CHAT (NUM, NAME,TOTALCOUNT,REMAINCOUNT,CATEGORY)
+	VALUES(CHAT_SEQ.NEXTVAL, #{name}, #{totalcount}, 0, #{category})
+	</insert>
+	
+	<!-- 존재하는 방 리스트가져오기 -->
+	<select id="getRoomList" resultType="com.flenda.www.dto.ChatDto">
+	SELECT * FROM FINAL_CHAT
+ 	WHERE REMAINCOUNT !=0
+	</select>
+	
+	<!-- 현재 어떤 방에 들어가있는지 데이터추가하기 -->
+	<insert id="addRoomMember" parameterType="com.flenda.www.dto.ChatMemberDto">
+	INSERT INTO FINAL_CHATMEMBER(NUM, ID, ROOM, PRIROOM)
+	VALUES(CHAT_MEMBER_SEQ.NEXTVAL, #{id}, #{room}, #{priroom})
+	</insert>
+	
+	<!-- 현재 아이디가 어떤방에 들어가있는지 확인 -->
+	<select id="getRoomMember" parameterType="com.flenda.www.dto.ChatMemberDto" resultType="com.flenda.www.dto.ChatMemberDto">
+	SELECT ID,ROOM,PRIROOM
+	FROM FINAL_CHATMEMBER
+	WHERE ID = #{id}
+	</select>
+	
+	<!-- 같은 방에 존재하는 사람정보 모두가져오기 -->
+	<select id="sameRoomList" parameterType="com.flenda.www.dto.ChatMemberDto" resultType="com.flenda.www.dto.ChatMemberDto">
+	SELECT ID, ROOM, PRIROOM
+	FROM FINAL_CHATMEMBER
+	WHERE ROOM=#{room}
+	</select>
+	
+	<!-- 방변경 -->
+	<update id="updateRoomMember" parameterType="com.flenda.www.dto.ChatMemberDto">
+	<if test="room !=null and room !=''">
+		UPDATE FINAL_CHATMEMBER 
+		SET ROOM=#{room} 
+		WHERE ID= #{id}
+	</if>
+	
+	<if test="priroom !=null and priroom !=''">
+	UPDATE FINAL_CHATMEMBER SET PRIROOM = #{priroom} 
+	WHERE ID= #{id}
+	</if>	
+	</update>
+	
+	<!-- 방정보 제거-->
+	<delete id="deleteRoomMember" parameterType="com.flenda.www.dto.ChatMemberDto">
+	DELETE FROM FINAL_CHATMEMBER
+	WHERE ID=#{id}
+	
+	</delete>
+
+	<!-- 채팅방 입장 count증가 : Controller에서 처리-->
+	<update id="updateChatCountInc" parameterType="com.flenda.www.dto.ChatDto">
+		UPDATE FINAL_CHAT SET REMAINCOUNT = REMAINCOUNT + 1
+		WHERE NAME = #{name}
+	</update>
+	
+	<!-- 채팅방 입장 count감소 : Controller에서 처리-->
+	<update id="updateChatCountDec" parameterType="com.flenda.www.dto.ChatDto">
+		UPDATE FINAL_CHAT SET REMAINCOUNT = REMAINCOUNT - 1
+		WHERE NAME = #{name}
+	</update>
+	
+		<update id="ChatCountDec" parameterType="java.lang.String">
+		UPDATE FINAL_CHAT SET REMAINCOUNT = REMAINCOUNT - 1
+		WHERE NAME = #{roomId}
+	</update>
+	
+	<!-- 채팅방 삭제 : REMAINCOUNT가 0이되면 삭제한다. -->
+ 	<delete id="deleteChat">
+		DELETE FROM FINAL_CHAT
+		WHERE <![CDATA[ REMAINCOUNT <= 0 ]]>
+	</delete> 
+	
+	<!-- 검색한 방 리스트가져오기 -->
+	<select id="searchRoomList" resultType="com.flenda.www.dto.ChatDto" parameterType="com.flenda.www.dto.ChatDto">
+	SELECT * FROM FINAL_CHAT
+	WHERE REMAINCOUNT !=0
+	<if test="category =='all' ">
+		AND 1=1
+	</if>
+	<if test="category =='refurn'">
+		AND CATEGORY = #{category}
+	</if>
+	<if test="category =='goods'">
+		AND CATEGORY = #{category}
+	</if>
+	<if test="category =='tour'">
+		AND CATEGORY = #{category}
+	</if>
+	<if test="category =='rest'">
+		AND CATEGORY = #{category}
+	</if>
+	 
+	</select>
+	
+	<insert id="addMsg" parameterType="com.flenda.www.dto.MsgDto">
+		INSERT INTO MSG_SAVE(NUM,ROOMID,MSG,WHO,WDATE)
+		VALUES(MSG_SEQ.NEXTVAL,#{roomId}, #{msg}, #{who},SYSDATE)
+	</insert>
+	
+	<select id="getMsg" parameterType="java.lang.String" resultType="com.flenda.www.dto.MsgDto">
+		SELECT NUM,ROOMID,MSG,WHO,WDATE
+		FROM MSG_SAVE
+		WHERE ROOMID=#{roomId}
+		ORDER BY WDATE ASC
+	</select>
+	
+	 <delete id="deleteMsg" parameterType="java.lang.String">
+		DELETE FROM MSG_SAVE
+		WHERE ROOMID = #{roomId}
+	</delete> 
+</mapper>  

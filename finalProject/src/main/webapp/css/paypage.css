@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+.pay{
+	width: 1000px;
+	margin: auto;
+}
+
+.pay-sub{
+	font-size: 30px;
+	font-weight: bold;
+	margin: 10px;
+}
+.pay-info{
+	width: 470px;
+	float: left;
+}
+.pay_method{
+	width: 450px;
+	float: left;
+	font-size: 18px;
+}
+
+/* 좌측 결제정보 */
+.info-top{
+	width: 450px;
+	background-color: #E0F2F7;
+	margin: 10px;
+}
+
+.info-pay{
+	margin-bottom: 20px;
+}
+
+.info-pay-sub{
+	float: left;
+	margin-left: 20px;
+	text-align: left;
+}
+
+.info-pay-sub div{
+	margin-bottom: 10px;
+}
+
+.info-pay-money{
+	float: right;
+	margin-right: 30px;
+	text-align: right;
+}
+
+.info-pay-money div{
+	margin-bottom: 5px;
+}
+
+.info-total{
+	
+}
+
+.info-bottom{
+	width: 450px;
+	background-color: #E0F2F7;
+	margin: 10px;
+	text-align: left;
+	padding: 20px;
+}
+
+.info-bottom > div > input {
+	width: 400px;
+	height: 50px;
+	margin-bottom: 20px;
+}
+
+/* 우측 결제방법 */
+.method-top{
+	width: 450px;
+	height: 400px;
+	background-color: #E0F2F7;
+	margin: 10px;
+	text-align: left;
+	padding: 10px;
+}
+/* 결제 방법 */
+.method-hedaer{
+	font-size: 25px;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.method_body{
+	margin: 10px;
+	margin-bottom: 20px;
+}
+#payMethod{
+	margin-right: 5px;	
+}
+
+.method-top > div > input{
+	margin-right: 5px;
+}
+
+/* 약관 및 안내 */
+.method-bottom{
+	width: 450px;
+	height: 380px;
+	background-color: #E0F2F7;
+	margin: 10px;
+	text-align: left;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+.method-bottom input{
+	margin-right: 5px;
+}
+.agree_header{
+	font-weight: bold;
+	margin: 10px;
+}
+
+.agree_body {
+	width: 400px;
+	border: 1px solid;
+	border-color: #E0E0F8;
+	margin: 10px;
+	margin-bottom: 20px;
+}
+.agree_info{
+	margin: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+#agree_waring{
+	margin: 1px;
+	color: red;
+	font-size: 15px;
+}

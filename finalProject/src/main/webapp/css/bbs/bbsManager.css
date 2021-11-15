@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+/* 전체 게시글 */
+.communityAll{
+	width: 100%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+}
+/* 총 게시글 수 + 새 글 작성 */
+.new{
+	width: 100%;
+	height: 50px;
+	margin-left: 20px;
+}
+/* 총 게시글 수*/
+.bbsAllCount{
+	float: left;
+}
+/* 새 글 작성 */
+.newnew{
+	float: right;
+	margin-right: 20px;
+}
+/* 게시글의 소제목 */
+.communityOne{
+	width: 100%;
+	height: 50px;
+/*	border: 2px solid purple;*/
+}
+/* 소제목 목록 */
+.Header{
+	width: 100%;
+	height: 50px;
+	border: 2px solid gray;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.SEQ{
+	width: 7%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.ID{
+	width: 10%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.TITLE{
+	width: 28%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.AREA{
+	width: 7%;
+	height: 50px;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.READCOUNT{
+	width: 8%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.COMMENTCOUNT{
+	width: 8%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.LIKECOUNT{
+	width: 8%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.WDATE{
+	width: 14%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+.BUTTONS{
+	width: 10%;
+	height: 100%;
+/*	border: 2px solid gray;*/
+	float: left;
+}
+/* 게시글 하나하나 뿌려주는 리스트*/
+.Body{
+	width: 100%;
+	height: 100%;
+/*	border: 2px solid hotpink;*/
+	font-size: 18px; 
+}
+.bbsOne{
+	width: 100%;
+	height: 50px;
+	border: 2px solid gray;
+}
+.Seq{
+	width: 7%;
+	height: 100%;
+/*	border: 2px solid red;*/
+	float: left;
+}
+.Id{
+	width: 10%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+.Title{
+	width: 28%;
+	height: 100%;
+/*	border: 2px solid red;*/
+	float: left;
+}
+a {
+	color: black;
+	text-decoration-line: none;
+}
+a:hover{
+	color: black;
+	text-decoration: underline;
+}
+.Area{
+	width: 7%;
+	height: 50px;
+/*	border: 2px solid red;*/
+	float: left;
+}
+.Readcount{
+	width: 8%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+.Commentcount{
+	width: 8%;
+	height: 100%;
+/*	border: 2px solid red;*/
+	float: left;
+}
+.Likecount{
+	width: 8%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+.Wdate{
+	width: 14%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+.Buttons{
+	width: 10%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+.btn1{
+	width: 50%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+.btn2{
+	width: 50%;
+	height: 100%;
+/*	border: 2px solid blue;*/
+	float: left;
+}
+/* 검색 */
+.foot{
+	width: 100%;
+	height: 55px;
+/*	border: 3px solid red;*/
+	margin-top: 10px;
+	clear: both;
+}
+.searchNow{
+	position: relative;
+	width: 370px;
+	height: 55px;
+/*	border: 3px solid blue;*/
+}
+.searchSelect{
+	width: 90px;
+/*	border: 3px solid yellow;*/
+	float: left;
+	margin-top: 2px;
+}
+.searchInput{
+	width: 270px;
+/*	border: 3px solid gray;*/
+	float: left;
+}
+
+input[type=text] {
+  width: 180px;
+  height: 40px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+/*  padding: 12px 20px 12px 40px;*/
+/*  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;*/
+}
+
+input[type=text]:focus {
+/*  width: 80%;*/
+}
+/* 페이징 */
+.paging{
+	width: 100%;
+	height: 50px;
+/*	border: 3px solid black;*/
+	margin-top: 20px;
+	clear: both;	
+}
